@@ -1,3 +1,6 @@
+<!-- Brain of the app, basically tells us everything we need to know; what java version; what libraries to download; is this springboot?
+how its built and run basically -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -10,7 +13,15 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.1</version>
     </parent>
+         
+<!-- guarantees that springboot is actually enabled
+         Sets compatible dependency versions
+         Configures Maven defaults
+         Enables Spring Boot conventions
+         Makes spring-boot-maven-plugin work
+-->
 
+         
     <groupId>com.example.ccinfom</groupId>
     <artifactId>hoa-starter</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -20,6 +31,8 @@
         <java.version>17</java.version>
     </properties>
 
+         <!--correct java version -->
+         
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -27,11 +40,23 @@
         </dependency>
     </dependencies>
 
+         <!-- web server is included
+            This pulls in: 
+                  Spring MVC
+                  Embedded Tomcat
+                  HTTP stack
+                  JSON support
+                           Without this:
+                  No localhost:8080
+                  No controllers
+                  No web app-->
+
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                     <!-- The app can run via maven-->
             </plugin>
         </plugins>
     </build>
