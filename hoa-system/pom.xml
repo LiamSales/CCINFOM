@@ -23,9 +23,9 @@ how its built and run basically -->
 
          
     <groupId>com.example.ccinfom</groupId>
-    <artifactId>hoa-starter</artifactId>
+    <artifactId>hoa-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>hoa-starter</name>
+    <name>hoa-system</name>
 
     <properties>
         <java.version>17</java.version>
