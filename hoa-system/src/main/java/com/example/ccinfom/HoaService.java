@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class HoaService {
 
-    public String getStatus() {
-        return "HOA system is alive (via service)";
+    public Homeowner getSampleHomeowner() {
+        return new Homeowner(1L, "Juan Dela Cruz");
     }
 }
