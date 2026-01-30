@@ -13,7 +13,7 @@ public class TestController {
     }
 
     @GetMapping("/")
-    public String home() {
-        return hoaService.getStatus();
+    public Homeowner home() {
+        return hoaService.getSampleHomeowner();
     }
 }
