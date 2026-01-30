@@ -236,3 +236,8 @@ During the **DB Design Defense**, students must justify their schema by simulati
 * Physical deletion of critical records is generally prohibited.
 * Most deletions are logical, implemented via status fields.
 * Strong emphasis is placed on real-world modeling and database correctness.
+
+        mysql> CREATE USER 'hoa_user'@'localhost'
+            -> 5';
+        IDENTIFIED BY 'Str0ng!Hoa#2025';
+        Query OK, 0 rows affected (0.01 sec)
