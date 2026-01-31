@@ -38,7 +38,14 @@ how its built and run basically -->
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+         <dependency>
+             <groupId>com.mysql</groupId>
+             <artifactId>mysql-connector-j</artifactId>
+             <scope>runtime</scope>
+         </dependency>
     </dependencies>
+
+         
 
          <!-- web server is included
             This pulls in: 
@@ -49,7 +56,9 @@ how its built and run basically -->
                            Without this:
                   No localhost:8080
                   No controllers
-                  No web app-->
+                  No web app
+         
+         added MySQL dependency-->
 
     <build>
         <plugins>
