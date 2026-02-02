@@ -1,11 +1,6 @@
 package com.example.ccinfom;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class HomeownerRepository {
-
-    public Homeowner findSample() {
-        return new Homeowner(1L, "Juan Dela Cruz");
-    }
+public interface HomeownerRepository extends JpaRepository<Homeowner, Long> {
 }
