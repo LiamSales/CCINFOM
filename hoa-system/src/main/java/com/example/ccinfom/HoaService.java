@@ -1,6 +1,6 @@
-import jakarta.annotation.PostConstruct;
-import javax.sql.DataSource;
-import java.sql.Connection;
+package com.example.ccinfom;
+
+import org.springframework.stereotype.Service;
 
 @Service
 public class HoaService {
@@ -11,15 +11,7 @@ public class HoaService {
         this.homeownerRepository = homeownerRepository;
     }
 
-    @PostConstruct
-    public void logDbInfo() throws Exception {
-        try (Connection c = dataSource.getConnection()) {
-            System.out.println("CONNECTED TO DB: " + c.getMetaData().getURL());
-            System.out.println("DB USER: " + c.getMetaData().getUserName());
-        }
-    }
-
-        public Homeowner save(Homeowner homeowner) {
+    public Homeowner save(Homeowner homeowner) {
         return homeownerRepository.save(homeowner);
     }
 

@@ -1,9 +1,9 @@
 package com.example.ccinfom;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequestMapping("/homeowners")
 public class TestController {
 
     private final HoaService hoaService;
@@ -12,8 +12,13 @@ public class TestController {
         this.hoaService = hoaService;
     }
 
-    @GetMapping("/")
-    public Homeowner home() {
+    @PostMapping
+    public Homeowner create(@RequestBody Homeowner homeowner) {
+        return hoaService.save(homeowner);
+    }
+
+    @GetMapping("/{id}")
+    public Homeowner get(@PathVariable Long id) {
         return hoaService.getSampleHomeowner();
     }
 }
