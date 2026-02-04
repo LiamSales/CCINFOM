@@ -5,12 +5,10 @@ import java.sql.Connection;
 @Service
 public class HoaService {
 
-    private final HomeownerRepository repository;
-    private final DataSource dataSource;
+    private final HomeownerRepository homeownerRepository;
 
-    public HoaService(HomeownerRepository repository, DataSource dataSource) {
-        this.repository = repository;
-        this.dataSource = dataSource;
+    public HoaService(HomeownerRepository homeownerRepository) {
+        this.homeownerRepository = homeownerRepository;
     }
 
     @PostConstruct
@@ -21,8 +19,12 @@ public class HoaService {
         }
     }
 
+        public Homeowner save(Homeowner homeowner) {
+        return homeownerRepository.save(homeowner);
+    }
+
     public Homeowner getSampleHomeowner() {
-        return repository.findById(1L)
+        return homeownerRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Homeowner not found"));
     }
 }
