@@ -1,12 +1,15 @@
 package com.example.ccinfom;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
 public class Homeowner {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
@@ -14,8 +17,7 @@ public class Homeowner {
     protected Homeowner() {
     }
 
-    public Homeowner(Long id, String name) {
-        this.id = id;
+    public Homeowner(String name) {
         this.name = name;
     }
 
