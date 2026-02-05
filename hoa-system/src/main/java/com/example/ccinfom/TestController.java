@@ -19,6 +19,7 @@ public class TestController {
 
     @GetMapping("/{id}")
     public Homeowner get(@PathVariable Long id) {
-        return hoaService.getSampleHomeowner();
+        return hoaService.findById(id);
     }
+
 }
