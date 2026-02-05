@@ -15,6 +15,11 @@ public class HoaService {
         return homeownerRepository.save(homeowner);
     }
 
+    public Homeowner findById(Long id) {
+    return homeownerRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Homeowner not found: " + id));
+}
+
     public Homeowner getSampleHomeowner() {
         return homeownerRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Homeowner not found"));
