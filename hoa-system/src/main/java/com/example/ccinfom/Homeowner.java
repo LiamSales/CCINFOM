@@ -15,6 +15,7 @@ public class Homeowner {
     private String name;
 
     protected Homeowner() {
+        // Required by JPA and Jackson
     }
 
     public Homeowner(String name) {
@@ -27,5 +28,9 @@ public class Homeowner {
 
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
