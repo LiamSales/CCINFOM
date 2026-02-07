@@ -1,6 +1,8 @@
 package com.example.ccinfom;
 
-import java.util.ArrayList;
+import java.util.List;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -57,14 +59,25 @@ public class Homeowner {
         this.name = name;
     }
 
-        public int getYears() {
+        public int getYearsAsHomeowner() {
         return yearsAsHomeowner;
     }
-        public boolean getIntent() {
+        public boolean getIntentDeclared() {
         return intentDeclared;
 
     }
-        public void setIntent(boolean intentDeclared) {
+        public void setIntentDeclared(boolean intentDeclared) {
         this.intentDeclared = intentDeclared;
     }
+
+    public void addProperty(Property property) {
+    properties.add(property);
+    property.setHomeowner(this);
+    }
+    
+    public void removeProperty(Property property) {
+        properties.remove(property);
+        property.setHomeowner(null);
+    }
+
 }
