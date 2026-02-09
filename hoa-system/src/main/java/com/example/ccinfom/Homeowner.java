@@ -23,7 +23,7 @@ public class Homeowner {
     @Min(0)
     private int yearsAsHomeowner;
 
-    @Past //validate must be age of majority
+    @Past //validate must be age of majority, app side
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
@@ -32,6 +32,7 @@ public class Homeowner {
     @Email
     private String primaryEmail;
 
+    //how does this work
     @ElementCollection
     @CollectionTable(
         name = "homeowner_mobile_numbers",
@@ -43,13 +44,17 @@ public class Homeowner {
 
     private String pictureUrl;
 
-    private boolean intentDeclared;
+    private boolean undertaking;
+
+    private boolean expression;
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
+
+    private List<String> otherEmails = new ArrayList<>();
 
     protected Homeowner() {
         // Required by JPA and Jackson
@@ -61,14 +66,16 @@ public class Homeowner {
             LocalDate birthday,
             Gender gender,
             String primaryEmail,
-            boolean intentDeclared
+            boolean undertaking,
+            boolean expression
     ) {
         this.name = name;
         this.yearsAsHomeowner = yearsAsHomeowner;
         this.birthday = birthday;
         this.gender = gender;
         this.primaryEmail = primaryEmail;
-        this.intentDeclared = intentDeclared;
+        this.undertaking = undertaking;
+        this.expression = expression;
     }
 
     public Long getId() {
@@ -99,8 +106,12 @@ public class Homeowner {
         return mobileNumbers;
     }
 
-    public boolean isIntentDeclared() {
-        return intentDeclared;
+    public boolean isUndertaking() {
+        return undertaking;
+    }
+
+    public boolean isExpression() {
+        return expression;
     }
 
 
