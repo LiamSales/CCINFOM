@@ -1,21 +1,14 @@
 package com.example.ccinfom;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Min;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 
-//Personal information and contact details
-//Years as homeowner
-//Owned properties within the subdivision
-//Declaration of data accuracy and intent to become an HOA member
-//Other addresses and contact information when not residing in the subdivision
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Past;
 
 @Entity
 public class Homeowner {
@@ -30,13 +23,30 @@ public class Homeowner {
     @Min(0)
     private int yearsAsHomeowner;
 
+    @Past //validate must be age of majority
+    private LocalDate birthday;
+
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
+
+    @Email
+    private String primaryEmail;
+
+    @ElementCollection
+    @CollectionTable(
+        name = "homeowner_mobile_numbers",
+        joinColumns = @JoinColumn(name = "homeowner_id")
+    )
+    private List<String> mobileNumbers = new ArrayList<>();
+
+    private String facebookUrl;
+
+    private String pictureUrl;
+
     private boolean intentDeclared;
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
-
-    @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ContactInfo> contacts = new ArrayList<>();
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
@@ -45,9 +55,19 @@ public class Homeowner {
         // Required by JPA and Jackson
     }
 
-    public Homeowner(String name, int yearsAsHomeowner, boolean intentDeclared) {
+    public Homeowner(
+            String name,
+            int yearsAsHomeowner,
+            LocalDate birthday,
+            Gender gender,
+            String primaryEmail,
+            boolean intentDeclared
+    ) {
         this.name = name;
         this.yearsAsHomeowner = yearsAsHomeowner;
+        this.birthday = birthday;
+        this.gender = gender;
+        this.primaryEmail = primaryEmail;
         this.intentDeclared = intentDeclared;
     }
 
@@ -59,26 +79,36 @@ public class Homeowner {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-        public int getYearsAsHomeowner() {
+    public int getYearsAsHomeowner() {
         return yearsAsHomeowner;
     }
-        public boolean isIntentDeclared() {
-        return intentDeclared;
 
+    public LocalDate getBirthday() {
+        return birthday;
     }
-        public void setIntentDeclared(boolean intentDeclared) {
-        this.intentDeclared = intentDeclared;
+
+    public Gender getGender() {
+        return gender;
     }
+
+    public String getPrimaryEmail() {
+        return primaryEmail;
+    }
+
+    public List<String> getMobileNumbers() {
+        return mobileNumbers;
+    }
+
+    public boolean isIntentDeclared() {
+        return intentDeclared;
+    }
+
 
     public void addProperty(Property property) {
         properties.add(property);
         property.setHomeowner(this);
     }
-    
+
     public void removeProperty(Property property) {
         properties.remove(property);
         property.setHomeowner(null);
@@ -88,20 +118,9 @@ public class Homeowner {
         addresses.add(address);
         address.setHomeowner(this);
     }
-    
+
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setHomeowner(null);
     }
-
-    public void addContact(ContactInfo contact) {
-        contacts.add(contact);
-        contact.setHomeowner(this);
-    }
-    
-    public void removeContact(ContactInfo contact) {
-        contacts.remove(contact);
-        contact.setHomeowner(null);
-    }
-
 }

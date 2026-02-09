@@ -5,14 +5,23 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
-//Property class — TODOs
-//Purpose
-//Represents a physical lot, unit, or property inside the subdivision that is owned by a homeowner.
+//Each property is identified by a Property Code (e.g., B06L08).
+//A property has exactly one homeowner and one household.
+//A household is identified by a Household ID and is associated with one property.
+//Households contain one or more residents.
 
 @Entity
 public class Property {
 
+    @Id
+    @Column(length = 10)
+    private String propertyCode;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "homeowner_id")
+    private Homeowner homeowner;
+
+    
 }
 
 //TODO
