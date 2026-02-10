@@ -1,3 +1,7 @@
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
@@ -5,20 +9,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-// Every property in the subdivision has only one homeowner, one household that lives in the property,
-// and maybe several authorized residents in the household.
 
-// For every property in the subdivision, the household residing in the property must also be registered.
-// This information is being used in order to
-// identify who are residents of the subdivision and for the issuance of the resident’s ID.
-// The authorized Resident/s of the household is responsible
-// for maintaining (adding, modifying or deleting) resident members of the household.
-// A resident member cannot be a member of multiple households.
-// 
-// A household is provided with a household ID and is associated with only one property within the subdivision.
-// If the homeowner is an authorized Resident of the household in his property, this means that he is residing in his/her property.
-// A household has several resident members. 
-// 
 // When an authorized resident of the household deletes a resident in the household, the resident ID card of the deleted household
 // member is cancelled.
 // 
@@ -40,5 +31,17 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Household {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @joinColumn //figure out owning side and inverse side
+    private Property property;
+
+    @OneToMany() //incomplete
+    private List<Resident> residents  = new ArrayList<>();
+
+    //automatically add linked homeowner upon instantiation
 
 }
