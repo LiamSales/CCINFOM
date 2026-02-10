@@ -6,12 +6,7 @@ import jakarta.persistence.ManyToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 // Every property in the subdivision has only one homeowner, one household that lives in the property,
-//  and maybe several authorized residents in the household.
-// 
-// Properties in the subdivision/ is identifiable by a property code. Properties are identified by its block and lot like B06L08. (natural)
-// Other details of the property include the 
-// (a) size of the property and the 
-// (b) date it was turned over to the homeowner.
+// and maybe several authorized residents in the household.
 
 // For every property in the subdivision, the household residing in the property must also be registered.
 // This information is being used in order to
@@ -54,5 +49,21 @@ public class Property {
     @JoinColumn(name = "homeowner_id")
     private Homeowner homeowner;
 
+    private double propertySize;
+
+    @Past
+    private LocalDate turnoverDate;
+
+    private Household household;
+
+
+    
+    protected Property(){}
+
+    public Property(
+
+    ) {
+
+    }
 
 }

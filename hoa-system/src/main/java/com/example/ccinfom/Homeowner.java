@@ -44,6 +44,7 @@ public class Homeowner {
 
     private String pictureUrl;
 
+    @NotBlank
     private boolean undertaking;
 
     private boolean expression;
