@@ -32,7 +32,6 @@ public class Homeowner {
     @Email
     private String primaryEmail;
 
-    //how does this work
     @ElementCollection
     @CollectionTable(
         name = "homeowner_mobile_numbers",
@@ -40,7 +39,6 @@ public class Homeowner {
     )
     @Column(name = "mobile_number")
     private List<String> mobileNumbers = new ArrayList<>();
-
 
     private String facebookUrl;
 
@@ -64,9 +62,7 @@ public class Homeowner {
     @Column(name = "email")
     private List<String> otherEmails = new ArrayList<>();
 
-    protected Homeowner() {
-        // Required by JPA and Jackson
-    }
+    protected Homeowner(){}
 
     public Homeowner(
             String name,
@@ -114,6 +110,18 @@ public class Homeowner {
         return mobileNumbers;
     }
 
+    public List<String> getOtherEmails() {
+        return otherEmails;
+    }
+
+    public String getFacebookUrl() {
+        return facebookUrl;
+    }
+
+    public String getPictureUrl() {
+        return pictureUrl;
+    }
+
     public boolean isUndertaking() {
         return undertaking;
     }
@@ -122,6 +130,57 @@ public class Homeowner {
         return expression;
     }
 
+    public List<Property> getProperties() {
+        return properties;
+    }
+
+    public List<Address> getAddresses() {
+        return addresses;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setYearsAsHomeowner(int yearsAsHomeowner) {
+        this.yearsAsHomeowner = yearsAsHomeowner;
+    }
+
+    public void setBirthday(LocalDate birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setPrimaryEmail(String primaryEmail) {
+        this.primaryEmail = primaryEmail;
+    }
+
+    public void setFacebookUrl(String facebookUrl) {
+        this.facebookUrl = facebookUrl;
+    }
+
+    public void setPictureUrl(String pictureUrl) {
+        this.pictureUrl = pictureUrl;
+    }
+
+    public void declareUndertaking() {
+        this.undertaking = true;
+    }
+
+    public void expressMembershipIntent() {
+        this.expression = true;
+    }
+
+    public void addMobileNumber(String number) {
+        this.mobileNumbers.add(number);
+    }
+
+    public void addOtherEmail(String email) {
+        this.otherEmails.add(email);
+    }
 
     public void addProperty(Property property) {
         properties.add(property);
@@ -141,5 +200,10 @@ public class Homeowner {
     public void removeAddress(Address address) {
         addresses.remove(address);
         address.setHomeowner(null);
+    }
+
+    public boolean isOfLegalAge() {
+        return birthday != null &&
+               birthday.isBefore(LocalDate.now().minusYears(18));
     }
 }
