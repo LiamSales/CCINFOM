@@ -24,4 +24,6 @@ public class HoaService {
         return homeownerRepository.findById(1L)
                 .orElseThrow(() -> new RuntimeException("Homeowner not found"));
     }
+
+    // should also have sql commands for other tables
 }
