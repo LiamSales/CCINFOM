@@ -23,7 +23,7 @@ public class Homeowner {
     @Min(0)
     private int yearsAsHomeowner;
 
-    @Past //validate must be age of majority, app side
+    @Past
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
@@ -38,7 +38,9 @@ public class Homeowner {
         name = "homeowner_mobile_numbers",
         joinColumns = @JoinColumn(name = "homeowner_id")
     )
+    @Column(name = "mobile_number")
     private List<String> mobileNumbers = new ArrayList<>();
+
 
     private String facebookUrl;
 
@@ -54,6 +56,12 @@ public class Homeowner {
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(
+        name = "homeowner_other_emails",
+        joinColumns = @JoinColumn(name = "homeowner_id")
+    )
+    @Column(name = "email")
     private List<String> otherEmails = new ArrayList<>();
 
     protected Homeowner() {
