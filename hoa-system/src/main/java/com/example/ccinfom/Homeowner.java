@@ -10,6 +10,12 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 
+/*
+(c) properties he/she owns in the subdivision
+(d) household in each of his/her 
+*/
+
+
 @Entity
 public class Homeowner {
 
@@ -44,16 +50,19 @@ public class Homeowner {
 
     private String pictureUrl;
 
-    @NotBlank
+    @NotNull
     private boolean undertaking;
-
+    
+    @NotNull
     private boolean expression;
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
 
-    @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Address> addresses = new ArrayList<>();
+    //should i place household as per the specs? do other tables first.
+
+    @NotBlank
+    private String address;
 
     @ElementCollection
     @CollectionTable(
@@ -72,7 +81,8 @@ public class Homeowner {
             Gender gender,
             String primaryEmail,
             boolean undertaking,
-            boolean expression
+            boolean expression,
+            String address
     ) {
         this.name = name;
         this.yearsAsHomeowner = yearsAsHomeowner;
@@ -81,6 +91,7 @@ public class Homeowner {
         this.primaryEmail = primaryEmail;
         this.undertaking = undertaking;
         this.expression = expression;
+        this.address = address;
     }
 
     public Long getId() {
@@ -135,8 +146,8 @@ public class Homeowner {
         return properties;
     }
 
-    public List<Address> getAddresses() {
-        return addresses;
+    public String getAddress() {
+        return address;
     }
 
     public void setName(String name) {
@@ -175,6 +186,10 @@ public class Homeowner {
         this.expression = true;
     }
 
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public void addMobileNumber(String number) {
         this.mobileNumbers.add(number);
     }
@@ -193,18 +208,4 @@ public class Homeowner {
         property.setHomeowner(null);
     }
 
-    public void addAddress(Address address) {
-        addresses.add(address);
-        address.setHomeowner(this);
-    }
-
-    public void removeAddress(Address address) {
-        addresses.remove(address);
-        address.setHomeowner(null);
-    }
-
-    public boolean isOfLegalAge() {
-        return birthday != null &&
-               birthday.isBefore(LocalDate.now().minusYears(18));
-    }
 }
