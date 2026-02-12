@@ -10,51 +10,34 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Past;
 
-/*
-(c) properties he/she owns in the subdivision
-(d) household in each of his/her 
-*/
-
 
 @Entity
-public class Homeowner {
+public class Homeowner extends Individual {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private int homeownderid;
 
-    @NotBlank
-    private String name;
 
     @Min(0)
-    private int yearsAsHomeowner;
+    private int residency_start;
 
-    @Past
-    private LocalDate birthday;
+    //set null to false
+    private boolean membership;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    //set null to false
+    private boolean isresident;
 
-    @Email
-    private String primaryEmail;
-
+    @OneToMany
     @ElementCollection
     @CollectionTable(
-        name = "homeowner_mobile_numbers",
-        joinColumns = @JoinColumn(name = "homeowner_id")
+        name = "homeowner_addinfo",
+        joinColumns = @JoinColumn(name = "homeownerid")
     )
-    @Column(name = "mobile_number")
-    private List<String> mobileNumbers = new ArrayList<>();
 
-    private String facebookUrl;
 
-    private String pictureUrl;
-
-    @NotNull
-    private boolean undertaking;
+//--------------------------
     
-    @NotNull
-    private boolean expression;
 
     @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Property> properties = new ArrayList<>();
