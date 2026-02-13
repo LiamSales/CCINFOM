@@ -12,6 +12,7 @@ import jakarta.validation.constraints.Past;
 
 
 @Entity
+@PrimaryKeyJoinColumn(name="individualid")
 public class Homeowner extends Individual {
 
     @Id
