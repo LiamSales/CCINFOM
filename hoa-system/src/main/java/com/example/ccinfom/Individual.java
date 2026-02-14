@@ -175,17 +175,16 @@ public class Individual {
         this.mobileNumbers.remove(number);
     }
 
-    //----study this bottom part
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Individual that)) return false;
-        return Objects.equals(individualId, that.individualId);
+        if (!(o instanceof individual that)) return false;
+        return Objects.equals(individualid, that.individualid);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(individualId);
+        return Objects.hash(individualid);
     }
 }
