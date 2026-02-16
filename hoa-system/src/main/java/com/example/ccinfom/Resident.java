@@ -8,59 +8,60 @@ import jakarta.persistence.*;
 @PrimaryKeyJoinColumn(name = "residentid")
 public class Resident extends Individual {
 
-    /*
-        The property this person lives in
-        Many residents can live in one property
-    */
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "property_code")
-    private Property property;
+    // @ManyToOne(optional = false)
+    // @JoinColumn(name = "property_code")
+    // private Property property;
 
-    /*
-        When the person started living there
-    */
-    @Column(name = "residency_start_date", nullable = false)
-    private LocalDate residencyStartDate;
 
-    /*
-        True if this resident is also the homeowner
-    */
-    @Column(name = "is_owner_resident", nullable = false)
-    private boolean ownerResident;
+    @Column(name = "renter", nullable = false)
+    private boolean renter;
+
+    @Column(name = "mobilenum", length = 45)
+    private String mobilenum;
+
+    @Column(name = "rel_homeowner", length = 45)
+    private String rel_homeowner;
+
 
     protected Resident() {}
 
     public Resident(
-            Property property,
-            LocalDate residencyStartDate,
-            boolean ownerResident
+            boolean renter,
+            String mobilenum,
+            String rel_homeowner
     ) {
-        this.property = property;
-        this.residencyStartDate = residencyStartDate;
-        this.ownerResident = ownerResident;
+        this.renter = renter;
+        this.mobilenum = mobilenum;
+        this.rel_homeowner = rel_homeowner;
     }
 
-    public Property getProperty() {
-        return property;
+    public boolean isRenter() {
+        return renter;
     }
 
-    public LocalDate getResidencyStartDate() {
-        return residencyStartDate;
+    public String getMobilenum() {
+        return mobilenum;
     }
 
-    public boolean isOwnerResident() {
-        return ownerResident;
+    public String getRel_homeowner() {
+        return rel_homeowner;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    // public void setProperty(Property property) {
+    //     this.property = property;
+    // }
+
+
+    public void setRenter(boolean renter) {
+        this.renter = renter;
     }
 
-    public void setResidencyStartDate(LocalDate residencyStartDate) {
-        this.residencyStartDate = residencyStartDate;
+    public void setMobilenum(String mobilenum) {
+        this.mobilenum = mobilenum;
     }
 
-    public void setOwnerResident(boolean ownerResident) {
-        this.ownerResident = ownerResident;
+    public void setRel_homeowner(String rel_homeowner) {
+        this.rel_homeowner = rel_homeowner;
     }
+
 }
