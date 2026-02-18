@@ -1,194 +1,63 @@
 package com.example.ccinfom;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-
 
 @Entity
+@Table(name = "homeowner")
+@PrimaryKeyJoinColumn(name = "homeownerid") 
 public class Homeowner extends Individual {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int homeownderid;
+    @Column(name = "residency_start")
+    private LocalDate residencyStart;
 
-
-    @Min(0)
-    private int residency_start;
-
-    //set null to false
+    @Column(name = "membership", nullable = false)
     private boolean membership;
 
-    //set null to false
-    private boolean isresident;
+    @Column(name = "isresident", nullable = false)
+    private boolean resident;
 
-    @OneToMany
-    @ElementCollection
-    @CollectionTable(
-        name = "homeowner_addinfo",
-        joinColumns = @JoinColumn(name = "homeownerid")
-    )
-
-
-//--------------------------
-    
-
-    @OneToMany(mappedBy = "homeowner", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Property> properties = new ArrayList<>();
-
-    //should i place household as per the specs? do other tables first.
-
-    @NotBlank
-    private String address;
-
-    @ElementCollection
-    @CollectionTable(
-        name = "homeowner_other_emails",
-        joinColumns = @JoinColumn(name = "homeowner_id")
-    )
-    @Column(name = "email")
-    private List<String> otherEmails = new ArrayList<>();
-
-    protected Homeowner(){}
+    protected Homeowner() {}
 
     public Homeowner(
-            String name,
-            int yearsAsHomeowner,
+            String lastname,
+            String firstname,
+            String mi,
             LocalDate birthday,
             Gender gender,
-            String primaryEmail,
+            String email,
             boolean undertaking,
-            boolean expression,
-            String address
+            LocalDate residencyStart,
+            boolean membership,
+            boolean resident
     ) {
-        this.name = name;
-        this.yearsAsHomeowner = yearsAsHomeowner;
-        this.birthday = birthday;
-        this.gender = gender;
-        this.primaryEmail = primaryEmail;
-        this.undertaking = undertaking;
-        this.expression = expression;
-        this.address = address;
+        super(lastname, firstname, mi, birthday, gender, email, undertaking);
+        this.residencyStart = residencyStart;
+        this.membership = membership;
+        this.resident = resident;
     }
 
-    public Long getId() {
-        return id;
+    public LocalDate getResidencyStart() {
+        return residencyStart;
     }
 
-    public String getName() {
-        return name;
+    public void setResidencyStart(LocalDate residencyStart) {
+        this.residencyStart = residencyStart;
     }
 
-    public int getYearsAsHomeowner() {
-        return yearsAsHomeowner;
+    public boolean isMembership() {
+        return membership;
     }
 
-    public LocalDate getBirthday() {
-        return birthday;
+    public void setMembership(boolean membership) {
+        this.membership = membership;
     }
 
-    public Gender getGender() {
-        return gender;
+    public boolean isResident() {
+        return resident;
     }
 
-    public String getPrimaryEmail() {
-        return primaryEmail;
+    public void setResident(boolean resident) {
+        this.resident = resident;
     }
-
-    public List<String> getMobileNumbers() {
-        return mobileNumbers;
-    }
-
-    public List<String> getOtherEmails() {
-        return otherEmails;
-    }
-
-    public String getFacebookUrl() {
-        return facebookUrl;
-    }
-
-    public String getPictureUrl() {
-        return pictureUrl;
-    }
-
-    public boolean isUndertaking() {
-        return undertaking;
-    }
-
-    public boolean isExpression() {
-        return expression;
-    }
-
-    public List<Property> getProperties() {
-        return properties;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setYearsAsHomeowner(int yearsAsHomeowner) {
-        this.yearsAsHomeowner = yearsAsHomeowner;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public void setGender(Gender gender) {
-        this.gender = gender;
-    }
-
-    public void setPrimaryEmail(String primaryEmail) {
-        this.primaryEmail = primaryEmail;
-    }
-
-    public void setFacebookUrl(String facebookUrl) {
-        this.facebookUrl = facebookUrl;
-    }
-
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl;
-    }
-
-    public void declareUndertaking() {
-        this.undertaking = true;
-    }
-
-    public void expressMembershipIntent() {
-        this.expression = true;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public void addMobileNumber(String number) {
-        this.mobileNumbers.add(number);
-    }
-
-    public void addOtherEmail(String email) {
-        this.otherEmails.add(email);
-    }
-
-    public void addProperty(Property property) {
-        properties.add(property);
-        property.setHomeowner(this);
-    }
-
-    public void removeProperty(Property property) {
-        properties.remove(property);
-        property.setHomeowner(null);
-    }
-
 }
