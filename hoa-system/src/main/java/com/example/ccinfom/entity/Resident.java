@@ -14,9 +14,14 @@ public class Resident extends Individual {
     @Column(name = "rel_homeowner", length = 45)
     private String rel_homeowner;
 
-    protected Resident() {
-        // required by JPA
-    }
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "householdid", nullable = false)
+    private Household household;
+
+    @Column(name = "authorized", nullable = false)
+    private boolean authorized;
+
+    protected Resident() {}
 
     public Resident(
             String lastname,
@@ -27,27 +32,46 @@ public class Resident extends Individual {
             String email,
             boolean undertaking,
             boolean renter,
-            String mobilenum,
-            String rel_homeowner
+            String rel_homeowner,
+            Household household,
+            boolean authorized
     ) {
         super(lastname, firstname, mi, birthday, gender, email, undertaking);
         this.renter = renter;
         this.rel_homeowner = rel_homeowner;
+        this.household = household;
+        this.authorized = authorized;
     }
 
     public boolean isRenter() {
         return renter;
     }
 
-    public void setRenter(boolean renter) {
-        this.renter = renter;
-    }
-
     public String getRel_homeowner() {
         return rel_homeowner;
     }
 
+    public Household getHousehold() {
+        return household;
+    }
+
+    public boolean isAuthorized() {
+        return authorized;
+    }
+
+    public void setRenter(boolean renter) {
+        this.renter = renter;
+    }
+
     public void setRel_homeowner(String rel_homeowner) {
         this.rel_homeowner = rel_homeowner;
+    }
+
+    public void setHousehold(Household household) {
+        this.household = household;
+    }
+
+    public void setAuthorized(boolean authorized) {
+        this.authorized = authorized;
     }
 }
