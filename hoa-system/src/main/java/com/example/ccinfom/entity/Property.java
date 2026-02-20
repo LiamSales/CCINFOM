@@ -15,8 +15,8 @@ public class Property {
 
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "homeownerid", nullable = false)
-    private Homeowner homeowner_homeownerid; // should this be an int?
-
+    private Homeowner homeowner_homeownerid;
+    
     @Positive
     @Column(name = "size", nullable = false)
     private int size;
@@ -56,10 +56,6 @@ public class Property {
 
     public void setHomeowner(Homeowner homeowner) {
         this.homeowner = homeowner;
-    }
-
-    public void setSize(int size) {
-        this.size = size;
     }
 
     public void setTurnover_date(LocalDate turnover_date) {
