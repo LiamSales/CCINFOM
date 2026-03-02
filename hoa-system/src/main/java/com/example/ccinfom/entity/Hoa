@@ -1,0 +1,294 @@
+package com.example.ccinfom;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PositiveOrZero;
+
+@Entity
+@Table(name = "hoa")
+public class Hoa {
+
+    @Id
+    @Column(name = "hoaname", length = 100)
+    private String hoaName;
+
+    /*
+       Office Address
+    */
+
+    @Column(name = "office_streetno", length = 20)
+    private String officeStreetNo;
+
+    @Column(name = "office_street", length = 45)
+    private String officeStreet;
+
+    @Column(name = "office_brgy", length = 45)
+    private String officeBarangay;
+
+    @Column(name = "office_city", length = 45)
+    private String officeCity;
+
+    @Column(name = "office_province", length = 45)
+    private String officeProvince;
+
+    @Column(name = "office_region", length = 45)
+    private String officeRegion;
+
+    @Column(name = "office_zip", length = 10)
+    private String officeZip;
+
+    /*
+       Map coordinates (string in schema, but double is better)
+    */
+    @Column(name = "office_mapx")
+    private Double officeMapX;
+
+    @Column(name = "office_mapy")
+    private Double officeMapY;
+
+    /*
+       Organization info
+    */
+
+    @PositiveOrZero
+    @Column(name = "year_est")
+    private Integer yearEstablished;
+
+    @Column(name = "website", length = 100)
+    private String website;
+
+    @Column(name = "subd_name", length = 45)
+    private String subdivisionName;
+
+    /*
+       Monthly dues
+    */
+    @PositiveOrZero
+    @Column(name = "monthly_dues")
+    private Integer monthlyDues;
+
+    /*
+       Collection day (1 to 20)
+    */
+    @Column(name = "collection_day")
+    private Integer collectionDay;
+
+    /*
+       Legal documents
+       (store filenames or storage paths)
+    */
+
+    @Column(name = "articles_file", length = 255)
+    private String articlesOfIncorporationFile;
+
+    @Column(name = "bylaws_file", length = 255)
+    private String bylawsFile;
+
+    @Column(name = "ga_minutes_file", length = 255)
+    private String generalAssemblyMinutesFile;
+
+    @Column(name = "attendance_sheet_file", length = 255)
+    private String attendanceSheetFile;
+
+    @Column(name = "code_of_ethics_file", length = 255)
+    private String codeOfEthicsFile;
+
+    /*
+       Certification about other HOA
+    */
+
+    @Column(name = "other_hoa_exists", nullable = false)
+    private boolean otherHoaExists;
+
+    @Column(name = "other_hoa_name", length = 100)
+    private String otherHoaName;
+
+    @Column(name = "other_hoa_address", length = 255)
+    private String otherHoaAddress;
+
+    protected Hoa() {}
+
+    public Hoa(String hoaName) {
+        this.hoaName = hoaName;
+    }
+
+    public String getHoaName() {
+        return hoaName;
+    }
+
+    public String getOfficeStreetNo() {
+        return officeStreetNo;
+    }
+
+    public String getOfficeStreet() {
+        return officeStreet;
+    }
+
+    public String getOfficeBarangay() {
+        return officeBarangay;
+    }
+
+    public String getOfficeCity() {
+        return officeCity;
+    }
+
+    public String getOfficeProvince() {
+        return officeProvince;
+    }
+
+    public String getOfficeRegion() {
+        return officeRegion;
+    }
+
+    public String getOfficeZip() {
+        return officeZip;
+    }
+
+    public Double getOfficeMapX() {
+        return officeMapX;
+    }
+
+    public Double getOfficeMapY() {
+        return officeMapY;
+    }
+
+    public Integer getYearEstablished() {
+        return yearEstablished;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getSubdivisionName() {
+        return subdivisionName;
+    }
+
+    public Integer getMonthlyDues() {
+        return monthlyDues;
+    }
+
+    public Integer getCollectionDay() {
+        return collectionDay;
+    }
+
+    public String getArticlesOfIncorporationFile() {
+        return articlesOfIncorporationFile;
+    }
+
+    public String getBylawsFile() {
+        return bylawsFile;
+    }
+
+    public String getGeneralAssemblyMinutesFile() {
+        return generalAssemblyMinutesFile;
+    }
+
+    public String getAttendanceSheetFile() {
+        return attendanceSheetFile;
+    }
+
+    public String getCodeOfEthicsFile() {
+        return codeOfEthicsFile;
+    }
+
+    public boolean isOtherHoaExists() {
+        return otherHoaExists;
+    }
+
+    public String getOtherHoaName() {
+        return otherHoaName;
+    }
+
+    public String getOtherHoaAddress() {
+        return otherHoaAddress;
+    }
+
+    public void setOfficeStreetNo(String officeStreetNo) {
+        this.officeStreetNo = officeStreetNo;
+    }
+
+    public void setOfficeStreet(String officeStreet) {
+        this.officeStreet = officeStreet;
+    }
+
+    public void setOfficeBarangay(String officeBarangay) {
+        this.officeBarangay = officeBarangay;
+    }
+
+    public void setOfficeCity(String officeCity) {
+        this.officeCity = officeCity;
+    }
+
+    public void setOfficeProvince(String officeProvince) {
+        this.officeProvince = officeProvince;
+    }
+
+    public void setOfficeRegion(String officeRegion) {
+        this.officeRegion = officeRegion;
+    }
+
+    public void setOfficeZip(String officeZip) {
+        this.officeZip = officeZip;
+    }
+
+    public void setOfficeMapX(Double officeMapX) {
+        this.officeMapX = officeMapX;
+    }
+
+    public void setOfficeMapY(Double officeMapY) {
+        this.officeMapY = officeMapY;
+    }
+
+    public void setYearEstablished(Integer yearEstablished) {
+        this.yearEstablished = yearEstablished;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setSubdivisionName(String subdivisionName) {
+        this.subdivisionName = subdivisionName;
+    }
+
+    public void setMonthlyDues(Integer monthlyDues) {
+        this.monthlyDues = monthlyDues;
+    }
+
+    public void setCollectionDay(Integer collectionDay) {
+        this.collectionDay = collectionDay;
+    }
+
+    public void setArticlesOfIncorporationFile(String file) {
+        this.articlesOfIncorporationFile = file;
+    }
+
+    public void setBylawsFile(String file) {
+        this.bylawsFile = file;
+    }
+
+    public void setGeneralAssemblyMinutesFile(String file) {
+        this.generalAssemblyMinutesFile = file;
+    }
+
+    public void setAttendanceSheetFile(String file) {
+        this.attendanceSheetFile = file;
+    }
+
+    public void setCodeOfEthicsFile(String file) {
+        this.codeOfEthicsFile = file;
+    }
+
+    public void setOtherHoaExists(boolean otherHoaExists) {
+        this.otherHoaExists = otherHoaExists;
+    }
+
+    public void setOtherHoaName(String otherHoaName) {
+        this.otherHoaName = otherHoaName;
+    }
+
+    public void setOtherHoaAddress(String otherHoaAddress) {
+        this.otherHoaAddress = otherHoaAddress;
+    }
+}
