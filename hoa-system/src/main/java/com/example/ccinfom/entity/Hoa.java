@@ -106,6 +106,14 @@ public class Hoa {
     @Column(name = "other_hoa_address", length = 255)
     private String otherHoaAddress;
 
+    @OneToMany(mappedBy = "hoa", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<HoaSubmission> submissions = new ArrayList<>();
+
+    public List<HoaSubmission> getSubmissions() {
+        return submissions;
+    }
+
+
     protected Hoa() {}
 
     public Hoa(String hoaName) {
@@ -204,6 +212,10 @@ public class Hoa {
         return otherHoaAddress;
     }
 
+    public void addSubmission(HoaSubmission submission) {
+        submissions.add(submission);
+    }
+    
     public void setOfficeStreetNo(String officeStreetNo) {
         this.officeStreetNo = officeStreetNo;
     }
@@ -290,5 +302,9 @@ public class Hoa {
 
     public void setOtherHoaAddress(String otherHoaAddress) {
         this.otherHoaAddress = otherHoaAddress;
+    }
+
+    public void removeSubmission(HoaSubmission submission) {
+        submissions.remove(submission);
     }
 }
