@@ -22,3 +22,10 @@ public class HoaApplication {
         
     }
 }
+
+/*If you want to store schema definitions in GitHub, you use:
+
+SQL migration files
+Flyway scripts
+Liquibase files
+*/

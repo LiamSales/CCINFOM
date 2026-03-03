@@ -2,12 +2,15 @@ package com.example.ccinfom;
 
 import org.springframework.stereotype.Service;
 
+//we also need to edit this because its basically an inheritance, so we inherit from individual again? i think?
+
+
 @Service
-public class HoaService {
+public class HomeownerService {
 
     private final HomeownerRepository homeownerRepository;
 
-    public HoaService(HomeownerRepository homeownerRepository) {
+    public HomeownerService(HomeownerRepository homeownerRepository) {
         this.homeownerRepository = homeownerRepository;
     }
 
