@@ -1,6 +1,8 @@
 <!-- Brain of the app, basically tells us everything we need to know; what java version; what libraries to download; is this springboot?
 how its built and run basically -->
 
+<!--Hibernate dependencies removed.-->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
@@ -13,15 +15,7 @@ how its built and run basically -->
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.2.1</version>
     </parent>
-         
-<!-- guarantees that springboot is actually enabled
-         Sets compatible dependency versions
-         Configures Maven defaults
-         Enables Spring Boot conventions
-         Makes spring-boot-maven-plugin work
--->
 
-         
     <groupId>com.example.ccinfom</groupId>
     <artifactId>hoa-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
@@ -31,48 +25,40 @@ how its built and run basically -->
         <java.version>17</java.version>
     </properties>
 
-         <!--correct java version -->
-         
-         <dependencies>
-             <dependency>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-starter-web</artifactId>
-             </dependency>
-         
-             <dependency>
-                 <groupId>org.springframework.boot</groupId>
-                 <artifactId>spring-boot-starter-data-jpa</artifactId>
-             </dependency>
-         
-             <dependency>
-                 <groupId>com.mysql</groupId>
-                 <artifactId>mysql-connector-j</artifactId>
-                 <scope>runtime</scope>
-             </dependency>
-         </dependencies>
+    <dependencies>
 
+        <!-- Web layer (controllers, REST endpoints, Tomcat server) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
 
-         
+        <!-- Spring JDBC -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+        </dependency>
 
-         <!-- web server is included
-            This pulls in: 
-                  Spring MVC
-                  Embedded Tomcat
-                  HTTP stack
-                  JSON support
-                           Without this:
-                  No localhost:8080
-                  No controllers
-                  No web app
-         
-         added MySQL dependency-->
+        <!-- MySQL driver -->
+        <dependency>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!-- Bean validation (optional but useful) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                     <!-- The app can run via maven-->
             </plugin>
         </plugins>
     </build>
