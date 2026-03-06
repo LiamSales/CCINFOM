@@ -12,8 +12,13 @@ CREATE TABLE individual (
 );
 
 CREATE TABLE mobile (
-    mobilenum VARCHAR(20),
-    individualid INT,
+    mobilenum VARCHAR(20) NOT NULL,
+    individualid INT NOT NULL,
+
     PRIMARY KEY (mobilenum, individualid),
-    FOREIGN KEY (individualid) REFERENCES individual(individualid)
+
+    CONSTRAINT fk_mobile_individual
+        FOREIGN KEY (individualid)
+        REFERENCES individual(individualid)
+        ON DELETE CASCADE
 );
