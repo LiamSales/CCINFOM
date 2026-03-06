@@ -1,25 +1,18 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
 import java.time.LocalDate;
-import jakarta.persistence.*;
 
-@Entity
-@Table(name = "homeowner")
-@PrimaryKeyJoinColumn(name = "homeownerid") 
 public class Homeowner extends Individual {
 
-    @Column(name = "residency_start")
-    private LocalDate residencyStart;
-
-    @Column(name = "membership", nullable = false)
+    private Integer homeownerid;
+    private LocalDate residency_start;
     private boolean membership;
+    private boolean isresident;
 
-    @Column(name = "isresident", nullable = false)
-    private boolean resident;
-
-    protected Homeowner() {}
+    public Homeowner() {}
 
     public Homeowner(
+            Integer homeownerid,
             String lastname,
             String firstname,
             String mi,
@@ -27,22 +20,31 @@ public class Homeowner extends Individual {
             Gender gender,
             String email,
             boolean undertaking,
-            LocalDate residencyStart,
+            LocalDate residency_start,
             boolean membership,
-            boolean resident
+            boolean isresident
     ) {
         super(lastname, firstname, mi, birthday, gender, email, undertaking);
-        this.residencyStart = residencyStart;
+        this.homeownerid = homeownerid;
+        this.residency_start = residency_start;
         this.membership = membership;
-        this.resident = resident;
+        this.isresident = isresident;
     }
 
-    public LocalDate getResidencyStart() {
-        return residencyStart;
+    public Integer getHomeownerid() {
+        return homeownerid;
     }
 
-    public void setResidencyStart(LocalDate residencyStart) {
-        this.residencyStart = residencyStart;
+    public void setHomeownerid(Integer homeownerid) {
+        this.homeownerid = homeownerid;
+    }
+
+    public LocalDate getResidency_start() {
+        return residency_start;
+    }
+
+    public void setResidency_start(LocalDate residency_start) {
+        this.residency_start = residency_start;
     }
 
     public boolean isMembership() {
@@ -53,11 +55,11 @@ public class Homeowner extends Individual {
         this.membership = membership;
     }
 
-    public boolean isResident() {
-        return resident;
+    public boolean isIsresident() {
+        return isresident;
     }
 
-    public void setResident(boolean resident) {
-        this.resident = resident;
+    public void setIsresident(boolean isresident) {
+        this.isresident = isresident;
     }
 }

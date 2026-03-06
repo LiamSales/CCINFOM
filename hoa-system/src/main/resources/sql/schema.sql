@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS mobile;
+DROP TABLE IF EXISTS resident;
+DROP TABLE IF EXISTS homeowner;
+DROP TABLE IF EXISTS individual;
+
 CREATE TABLE individual (
     individualid INT AUTO_INCREMENT PRIMARY KEY,
     lastname VARCHAR(45) NOT NULL,
@@ -19,6 +24,19 @@ CREATE TABLE mobile (
 
     CONSTRAINT fk_mobile_individual
         FOREIGN KEY (individualid)
+        REFERENCES individual(individualid)
+        ON DELETE CASCADE
+);
+
+CREATE TABLE homeowner (
+    homeownerid INT PRIMARY KEY,
+
+    residency_start DATE,
+    membership BOOLEAN NOT NULL,
+    isresident BOOLEAN NOT NULL,
+
+    CONSTRAINT fk_homeowner_individual
+        FOREIGN KEY (homeownerid)
         REFERENCES individual(individualid)
         ON DELETE CASCADE
 );
