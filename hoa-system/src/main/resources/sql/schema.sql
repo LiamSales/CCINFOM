@@ -20,9 +20,9 @@ CREATE TABLE mobile (
     mobilenum VARCHAR(20) NOT NULL PRIMARY KEY,
     individualid INT NOT NULL,
 
+--     CONSTRAINT fk_mobile_individual
     FOREIGN KEY (individualid) REFERENCES individual(individualid)
-    -- each individual owns as one to many
-    --non-identifiying relationship (fk is not part of pk)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE homeowner (

@@ -20,9 +20,9 @@ CREATE TABLE mobile (
     mobilenum VARCHAR(20) NOT NULL PRIMARY KEY,
     individualid INT NOT NULL,
 
+--     CONSTRAINT fk_mobile_individual
     FOREIGN KEY (individualid) REFERENCES individual(individualid)
-    -- each individual owns as one to many
-    --non-identifiying relationship (fk is not part of pk)
+    ON DELETE CASCADE
 );
 
 CREATE TABLE homeowner (
@@ -92,7 +92,6 @@ CREATE TABLE resident_id(
     orno VARCHAR(45),
     resident_id INT,
     status CHAR(1) CHECK (status IN ('A','L','C')) NOT NULL,
--- why is status highlighted syntax?
     FOREIGN KEY (resident_id) REFERENCES resident(resident_id),
     FOREIGN KEY (orno) REFERENCES payment(orno)
 
@@ -126,7 +125,6 @@ CREATE TABLE mobile (
     individualid INT NOT NULL,
 
     FOREIGN KEY (individualid) REFERENCES individual(individualid)
-    -- one individual can have many mobile numbers
 );
 
 CREATE TABLE homeowner (
