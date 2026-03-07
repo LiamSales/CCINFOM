@@ -11,11 +11,11 @@ public class Individual {
     private String lastname;
     private String firstname;
     private String mi;
+    private String email;
     private LocalDate birthday;
     private Gender gender;
-    private String email;
     private String facebook_url;
-    private String picture_filename;
+    private String pic_filename;
     private boolean undertaking;
 
     private List<String> mobileNumbers = new ArrayList<>();
@@ -26,17 +26,21 @@ public class Individual {
             String lastname,
             String firstname,
             String mi,
+            String email,
             LocalDate birthday,
             Gender gender,
-            String email,
+            String facebook_url,
+            String pic_filename,
             boolean undertaking
     ) {
         this.lastname = lastname;
         this.firstname = firstname;
         this.mi = mi;
+        this.email = email;
         this.birthday = birthday;
         this.gender = gender;
-        this.email = email;
+        this.facebook_url = facebook_url;
+        this.pic_filename = pic_filename;
         this.undertaking = undertaking;
     }
 
@@ -72,6 +76,14 @@ public class Individual {
         this.mi = mi;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public LocalDate getBirthday() {
         return birthday;
     }
@@ -88,14 +100,6 @@ public class Individual {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getFacebook_url() {
         return facebook_url;
     }
@@ -104,12 +108,12 @@ public class Individual {
         this.facebook_url = facebook_url;
     }
 
-    public String getPicture_filename() {
-        return picture_filename;
+    public String getPic_filename() {
+        return pic_filename;
     }
 
-    public void setPicture_filename(String picture_filename) {
-        this.picture_filename = picture_filename;
+    public void setPic_filename(String pic_filename) {
+        this.pic_filename = pic_filename;
     }
 
     public boolean isUndertaking() {
@@ -144,10 +148,6 @@ public class Individual {
         return Objects.hash(individualid);
     }
 
-    /*
-        Nested enum.
-        Stored in SQL as CHAR(1) -> 'M' or 'F'
-    */
     public enum Gender {
 
         M('M'),
