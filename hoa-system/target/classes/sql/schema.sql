@@ -102,7 +102,7 @@ CREATE TABLE household(
 
 CREATE TABLE payment(
     orno INT PRIMARY KEY,
-    amount DECIMAL(5,2)
+    amount DECIMAL(5,2) NOT NULL
 );
 
 
@@ -129,48 +129,38 @@ CREATE TABLE resident_id(
 CREATE TABLE hoa (
     hoaname VARCHAR(100) PRIMARY KEY,
 
-    office_streetno VARCHAR(20),
-    office_street VARCHAR(45),
-    office_brgy VARCHAR(45),
-    office_city VARCHAR(45),
-    office_province VARCHAR(45),
-    office_region VARCHAR(45),
-    office_zip VARCHAR(10),
+    office_streetno VARCHAR(20) NOT NULL,
+    office_street VARCHAR(45) NOT NULL,
+    office_brgy VARCHAR(45) NOT NULL,
+    office_city VARCHAR(45) NOT NULL,
+    office_province VARCHAR(45) NOT NULL,
+    office_region VARCHAR(45) NOT NULL,
+    office_zip VARCHAR(45) NOT NULL,
 
-    office_mapx DOUBLE,
-    office_mapy DOUBLE,
+    office_mapx VARCHAR(45) NOT NULL,
+    office_mapy VARCHAR(45) NOT NULL,
 
-    year_est INT,
+    year_est INT(4) NOT NULL,
     website VARCHAR(100),
     subd_name VARCHAR(45),
+    monthly_dues INT(2)
 
-    monthly_dues INT,
-    collection_day INT,
-
-    articles_file VARCHAR(255),
-    bylaws_file VARCHAR(255),
-    ga_minutes_file VARCHAR(255),
-    attendance_sheet_file VARCHAR(255),
-    code_of_ethics_file VARCHAR(255),
-
-    other_hoa_exists BOOLEAN NOT NULL,
-    other_hoa_name VARCHAR(100),
-    other_hoa_address VARCHAR(255)
 );
 
 
 CREATE TABLE hoa_docs(
     submission_type INT PRIMARY KEY,
-    doc_name VARCHAR(100) NOT NULL
+    doc_name VARCHAR(200) NOT NULL,
+    submission_date DATETIME
 );
 
 
 CREATE TABLE hoa_submissions(
     hoa_hoaname VARCHAR(100),
-    submission_type INT,
+    hoa_docs_submission_type INT,
     submission_date DATE,
 
-    PRIMARY KEY (hoa_hoaname, submission_type, submission_date),
+    PRIMARY KEY (hoa_hoaname, hoa_docs_submission_type, submission_date),
 
     CONSTRAINT fk_submission_hoa
         FOREIGN KEY (hoa_hoaname)
@@ -178,31 +168,33 @@ CREATE TABLE hoa_submissions(
         ON DELETE CASCADE,
 
     CONSTRAINT fk_submission_doc
-        FOREIGN KEY (submission_type)
+        FOREIGN KEY (hoa_docs_submission_type)
         REFERENCES hoa_docs(submission_type)
 );
 
 
 CREATE TABLE hoa_officer(
     homeownerid INT,
-    hoaname VARCHAR(100),
+    position ENUM(100),
     start_date DATE NOT NULL,
-    end_date DATE,
+    end_date DATE NOT NULL,
 
-    elec_venue VARCHAR(45),
+    elec_date DATE
+
+    elec_venue VARCHAR(45) NOT NULL,
     elec_quorum BOOLEAN NOT NULL,
-    elec_witnessname VARCHAR(100),
-    elec_witnessmobile VARCHAR(20),
+    elec_witnessname VARCHAR(100) NOT NULL,
+    elec_witnessmobile INT(10) NOT NULL,
 
-    avail_mon VARCHAR(2),
-    avail_tue VARCHAR(2),
-    avail_wed VARCHAR(2),
-    avail_thu VARCHAR(2),
-    avail_fri VARCHAR(2),
-    avail_sat VARCHAR(2),
-    avail_sun VARCHAR(2),
+    avail_Mon ENUM,
+    avail_Tue ENUM,
+    avail_Wed ENUM,
+    avail_Thu ENUM,
+    avail_Fri ENUM,
+    avail_Sat ENUM,
+    avail_Sun ENUM,
 
-    PRIMARY KEY (homeownerid, hoaname),
+    PRIMARY KEY (homeownerid, position, elec_date),
 
     CONSTRAINT fk_officer_homeowner
         FOREIGN KEY (homeownerid)
