@@ -175,24 +175,27 @@ CREATE TABLE hoa_submissions(
 
 CREATE TABLE hoa_officer(
     homeownerid INT,
-    position ENUM(100), --specs just say enum(...)
+    hoaname VARCHAR(100),
+
+    position ENUM('X'), 
+
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
 
-    elec_date DATE
+    elec_date DATE,
 
     elec_venue VARCHAR(45) NOT NULL,
     elec_quorum BOOLEAN NOT NULL,
     elec_witnessname VARCHAR(100) NOT NULL,
     elec_witnessmobile INT(10) NOT NULL,
 
-    avail_Mon CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,,
-    avail_Tue CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,,
-    avail_Wed CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,,
-    avail_Thu CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,,
-    avail_Fri CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,,
-    avail_Sat CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,,
-    avail_Sun CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,,
+    avail_Mon CHAR(2) CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,
+    avail_Tue CHAR(2) CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,
+    avail_Wed CHAR(2) CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,
+    avail_Thu CHAR(2) CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,
+    avail_Fri CHAR(2) CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,
+    avail_Sat CHAR(2) CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,
+    avail_Sun CHAR(2) CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,
 
     PRIMARY KEY (homeownerid, position, elec_date),
 
@@ -204,3 +207,4 @@ CREATE TABLE hoa_officer(
         FOREIGN KEY (hoaname)
         REFERENCES hoa(hoaname)
 );
+
