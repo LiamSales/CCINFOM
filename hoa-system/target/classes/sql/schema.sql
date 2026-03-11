@@ -1,3 +1,7 @@
+DROP DATABASE IF EXISTS hoa_db;
+CREATE DATABASE hoa_db;
+USE hoa_db;
+
 DROP TABLE IF EXISTS hoa_docs;
 DROP TABLE IF EXISTS hoa_submissions;
 DROP TABLE IF EXISTS hoa;
@@ -106,6 +110,26 @@ CREATE TABLE payment(
 );
 
 
+CREATE TABLE hoa (
+    hoaname VARCHAR(100) PRIMARY KEY,
+
+    office_streetno VARCHAR(20) NOT NULL,
+    office_street VARCHAR(45) NOT NULL,
+    office_brgy VARCHAR(45) NOT NULL,
+    office_city VARCHAR(45) NOT NULL,
+    office_province VARCHAR(45) NOT NULL,
+    office_region VARCHAR(45) NOT NULL,
+    office_zip VARCHAR(45) NOT NULL,
+
+    office_mapx VARCHAR(45) NOT NULL,
+    office_mapy VARCHAR(45) NOT NULL,
+
+    year_est INT(4) NOT NULL,
+    website VARCHAR(100),
+    subd_name VARCHAR(45),
+    monthly_dues INT(2)
+
+);
 
 CREATE TABLE hoa_officer(
     homeownerid INT,
@@ -165,35 +189,11 @@ CREATE TABLE resident_id(
         REFERENCES hoa_officer(homeownerid)
 );
 
-
-CREATE TABLE hoa (
-    hoaname VARCHAR(100) PRIMARY KEY,
-
-    office_streetno VARCHAR(20) NOT NULL,
-    office_street VARCHAR(45) NOT NULL,
-    office_brgy VARCHAR(45) NOT NULL,
-    office_city VARCHAR(45) NOT NULL,
-    office_province VARCHAR(45) NOT NULL,
-    office_region VARCHAR(45) NOT NULL,
-    office_zip VARCHAR(45) NOT NULL,
-
-    office_mapx VARCHAR(45) NOT NULL,
-    office_mapy VARCHAR(45) NOT NULL,
-
-    year_est INT(4) NOT NULL,
-    website VARCHAR(100),
-    subd_name VARCHAR(45),
-    monthly_dues INT(2)
-
-);
-
-
 CREATE TABLE hoa_docs(
     submission_type INT PRIMARY KEY,
     doc_name VARCHAR(200) NOT NULL,
     submission_date DATETIME
 );
-
 
 CREATE TABLE hoa_submissions(
     hoa_hoaname VARCHAR(100),
