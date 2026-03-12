@@ -1,4 +1,4 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
 import jakarta.persistence.Embeddable;
 import java.io.Serializable;

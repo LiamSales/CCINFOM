@@ -175,24 +175,25 @@ CREATE TABLE hoa_submissions(
 
 CREATE TABLE hoa_officer(
     homeownerid INT,
+    hoaname VARCHAR(100) NOT NULL,
     position ENUM(100), --specs just say enum(...)
     start_date DATE NOT NULL,
     end_date DATE NOT NULL,
 
-    elec_date DATE
+    elec_date DATE,
 
     elec_venue VARCHAR(45) NOT NULL,
     elec_quorum BOOLEAN NOT NULL,
     elec_witnessname VARCHAR(100) NOT NULL,
     elec_witnessmobile INT(10) NOT NULL,
 
-    avail_Mon CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,,
-    avail_Tue CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,,
-    avail_Wed CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,,
-    avail_Thu CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,,
-    avail_Fri CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,,
-    avail_Sat CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,,
-    avail_Sun CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,,
+    avail_Mon CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,
+    avail_Tue CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,
+    avail_Wed CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,
+    avail_Thu CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,
+    avail_Fri CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,
+    avail_Sat CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,
+    avail_Sun CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,
 
     PRIMARY KEY (homeownerid, position, elec_date),
 
