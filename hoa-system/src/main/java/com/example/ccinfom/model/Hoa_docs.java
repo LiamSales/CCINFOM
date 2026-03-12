@@ -1,55 +1,67 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
-import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Entity
-@Table(name = "hoa_docs")
+/*
+Table: hoa_docs
+
+Business Rules:
+1. submission_type uniquely identifies each type of document.
+2. doc_name is required and describes the HOA document.
+3. submission_date records when the document was submitted.
+4. Document records are referenced by hoa_submissions.
+*/
+
 public class Hoa_docs {
 
-    @Id
-    @Column(name = "submission_type")
-    private Integer submissionType;
+    private Integer submission_type;
+    private String doc_name;
+    private LocalDateTime submission_date;
 
-    @Column(name = "doc_name", length = 100, nullable = false)
-    private String docName;
+    public Hoa_docs() {}
 
-    @Column(name = "submission_date")
-    private LocalDate submissionDate;
-
-    @OneToMany(mappedBy = "document")
-    private List<HoaSubmission> hoaLinks = new ArrayList<>();
-
-
-    protected HoaDoc() {}
-
-    public HoaDoc(Integer submissionType, String docName, LocalDate submissionDate) {
-        this.submissionType = submissionType;
-        this.docName = docName;
-        this.submissionDate = submissionDate;
+    public Hoa_docs(Integer submission_type, String doc_name, LocalDateTime submission_date) {
+        this.submission_type = submission_type;
+        this.doc_name = doc_name;
+        this.submission_date = submission_date;
     }
 
-    public Integer getSubmissionType() {
-        return submissionType;
+    public Integer getSubmission_type() {
+        return submission_type;
     }
 
-    public String getDocName() {
-        return docName;
+    public void setSubmission_type(Integer submission_type) {
+        this.submission_type = submission_type;
     }
 
-    public LocalDate getSubmissionDate() {
-        return submissionDate;
+    public String getDoc_name() {
+        return doc_name;
     }
 
-    public void setDocName(String docName) {
-        this.docName = docName;
+    public void setDoc_name(String doc_name) {
+        this.doc_name = doc_name;
     }
 
-    public void setSubmissionDate(LocalDate submissionDate) {
-        this.submissionDate = submissionDate;
+    public LocalDateTime getSubmission_date() {
+        return submission_date;
     }
-    
-    public List<HoaSubmission> getHoaLinks() {
-        return hoaLinks;
+
+    public void setSubmission_date(LocalDateTime submission_date) {
+        this.submission_date = submission_date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HoaDocs hoaDocs = (HoaDocs) o;
+        return Objects.equals(submission_type, hoaDocs.submission_type);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(submission_type);
     }
 }
