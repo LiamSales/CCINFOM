@@ -1,54 +1,74 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
-import jakarta.persistence.*;
+import java.time.LocalDate;
+import java.util.Objects;
 
-@Entity
-@Table(name = "hoa_submissions")
-public class HoaSubmissions {
+/*
+Table: hoa_submissions
 
-    @EmbeddedId
-    private HoaSubmissionId id;
+Business Rules:
+1. Composite Primary Key:
+      (hoa_hoaname, hoa_docs_submission_type, submission_date)
 
-    /*
-       IDENTIFYING relationship to HOA
-       FK is part of PK
-    */
-    @ManyToOne(optional = false)
-    @MapsId("hoaHoaname")
-    @JoinColumn(name = "hoa_hoaname")
-    private Hoa hoa;
+2. hoa_hoaname must reference an existing HOA.
+3. hoa_docs_submission_type must reference a valid document type in hoa_docs.
+4. submission_date represents the specific submission instance.
+*/
 
-    /*
-       IDENTIFYING relationship to HoaDoc
-       FK is part of PK
-    */
-    @ManyToOne(optional = false)
-    @MapsId("submissionType")
-    @JoinColumn(name = "submission_type")
-    private HoaDoc document;
+public class Hoa_submissions {
 
-    protected HoaSubmission() {}
+    private String hoa_hoaname;
+    private Integer hoa_docs_submission_type;
+    private LocalDate submission_date;
 
-    public HoaSubmission(Hoa hoa, HoaDoc document) {
-        this.hoa = hoa;
-        this.document = document;
-        this.id = new HoaSubmissionId(
-                hoa.getHoaName(),
-                document.getSubmissionType(),
-                document.getSubmissionDate()
-        );
+    public Hoa_submissions() {}
+
+    public Hoa_submissions(String hoa_hoaname,
+                          Integer hoa_docs_submission_type,
+                          LocalDate submission_date) {
+        this.hoa_hoaname = hoa_hoaname;
+        this.hoa_docs_submission_type = hoa_docs_submission_type;
+        this.submission_date = submission_date;
     }
 
-    public HoaSubmissionId getId() {
-        return id;
+    public String getHoa_hoaname() {
+        return hoa_hoaname;
     }
 
-    public Hoa getHoa() {
-        return hoa;
+    public void setHoa_hoaname(String hoa_hoaname) {
+        this.hoa_hoaname = hoa_hoaname;
     }
 
-    public HoaDoc getDocument() {
-        return document;
+    public Integer getHoa_docs_submission_type() {
+        return hoa_docs_submission_type;
+    }
+
+    public void setHoa_docs_submission_type(Integer hoa_docs_submission_type) {
+        this.hoa_docs_submission_type = hoa_docs_submission_type;
+    }
+
+    public LocalDate getSubmission_date() {
+        return submission_date;
+    }
+
+    public void setSubmission_date(LocalDate submission_date) {
+        this.submission_date = submission_date;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        HoaSubmissions that = (HoaSubmissions) o;
+
+        return Objects.equals(hoa_hoaname, that.hoa_hoaname)
+                && Objects.equals(hoa_docs_submission_type, that.hoa_docs_submission_type)
+                && Objects.equals(submission_date, that.submission_date);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hoa_hoaname, hoa_docs_submission_type, submission_date);
     }
 }
-
