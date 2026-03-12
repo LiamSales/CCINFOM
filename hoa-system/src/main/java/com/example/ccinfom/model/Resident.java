@@ -1,77 +1,93 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
-import java.time.LocalDate;
-import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.Objects;
 
-@Entity
-@Table(name = "resident")
-@PrimaryKeyJoinColumn(name = "residentid")
-public class Resident extends Individual {
+/*
+Table: resident
 
-    @Column(name = "renter", nullable = false)
+Business Rules:
+1. residentid is both the PRIMARY KEY and FOREIGN KEY referencing individual(individualid)
+   → A resident must already exist as an Individual.
+2. renter indicates whether the resident is renting the property.
+3. rel_homeowner describes the relationship between the resident and homeowner.
+4. authorized indicates if the resident is authorized by the homeowner.
+5. last_update must be updated annually for ID issuance eligibility (enforced in service layer).
+*/
+
+public class Resident {
+
+    private Integer residentid;
     private boolean renter;
-
-    @Column(name = "rel_homeowner", length = 45)
     private String rel_homeowner;
-
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "householdid", nullable = false)
-    private Household household;
-
-    @Column(name = "authorized", nullable = false)
     private boolean authorized;
+    private LocalDateTime last_update;
 
-    protected Resident() {}
+    public Resident() {}
 
-    public Resident(
-            String lastname,
-            String firstname,
-            String mi,
-            LocalDate birthday,
-            Gender gender,
-            String email,
-            boolean undertaking,
-            boolean renter,
-            String rel_homeowner,
-            Household household,
-            boolean authorized
-    ) {
-        super(lastname, firstname, mi, birthday, gender, email, undertaking);
+    public Resident(Integer residentid,
+                    boolean renter,
+                    String rel_homeowner,
+                    boolean authorized,
+                    LocalDateTime last_update) {
+        this.residentid = residentid;
         this.renter = renter;
         this.rel_homeowner = rel_homeowner;
-        this.household = household;
         this.authorized = authorized;
+        this.last_update = last_update;
+    }
+
+    public Integer getResidentid() {
+        return residentid;
+    }
+
+    public void setResidentid(Integer residentid) {
+        this.residentid = residentid;
     }
 
     public boolean isRenter() {
         return renter;
     }
 
-    public String getRel_homeowner() {
-        return rel_homeowner;
-    }
-
-    public Household getHousehold() {
-        return household;
-    }
-
-    public boolean isAuthorized() {
-        return authorized;
-    }
-
     public void setRenter(boolean renter) {
         this.renter = renter;
+    }
+
+    public String getRel_homeowner() {
+        return rel_homeowner;
     }
 
     public void setRel_homeowner(String rel_homeowner) {
         this.rel_homeowner = rel_homeowner;
     }
 
-    public void setHousehold(Household household) {
-        this.household = household;
+    public boolean isAuthorized() {
+        return authorized;
     }
 
     public void setAuthorized(boolean authorized) {
         this.authorized = authorized;
+    }
+
+    public LocalDateTime getLast_update() {
+        return last_update;
+    }
+
+    public void setLast_update(LocalDateTime last_update) {
+        this.last_update = last_update;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Resident resident = (Resident) o;
+        return Objects.equals(residentid, resident.residentid);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(residentid);
     }
 }
