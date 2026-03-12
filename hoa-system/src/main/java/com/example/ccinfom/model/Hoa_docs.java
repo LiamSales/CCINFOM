@@ -56,9 +56,11 @@ public class Hoa_docs {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HoaDocs hoaDocs = (HoaDocs) o;
-        return Objects.equals(submission_type, hoaDocs.submission_type);
+        Hoa_docs hoa_docs = (Hoa_docs) o;
+        return Objects.equals(submission_type, hoa_docs.submission_type);
     }
+
+    
 
     @Override
     public int hashCode() {

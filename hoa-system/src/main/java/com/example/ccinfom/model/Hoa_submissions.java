@@ -60,7 +60,7 @@ public class Hoa_submissions {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        HoaSubmissions that = (HoaSubmissions) o;
+        Hoa_submissions that = (Hoa_submissions) o;
 
         return Objects.equals(hoa_hoaname, that.hoa_hoaname)
                 && Objects.equals(hoa_docs_submission_type, that.hoa_docs_submission_type)
