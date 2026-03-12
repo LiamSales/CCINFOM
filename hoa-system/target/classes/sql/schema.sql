@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS hoa_db;
-CREATE DATABASE hoa_db;
-USE hoa_db;
-
 DROP TABLE IF EXISTS hoa_docs;
 DROP TABLE IF EXISTS hoa_submissions;
 DROP TABLE IF EXISTS hoa;
@@ -96,7 +92,7 @@ CREATE TABLE property (
 
 CREATE TABLE household(
     householdid INT PRIMARY KEY,
-    propertycode VARCHAR(6) NOT NULL UNIQUE,
+    propertycode VARCHAR(6) NOT NULL,
     CONSTRAINT fk_household_property
         FOREIGN KEY (propertycode)
         REFERENCES property(propertycode)
@@ -107,6 +103,26 @@ CREATE TABLE household(
 CREATE TABLE payment(
     orno INT PRIMARY KEY,
     amount DECIMAL(5,2) NOT NULL
+);
+
+
+CREATE TABLE resident_id(
+    cardno INT PRIMARY KEY,
+    request_date DATE NOT NULL,
+    request_reason VARCHAR(45) NOT NULL,
+    issue_date DATE NOT NULL,
+    hoa_officer VARCHAR(45) NOT NULL,
+    orno INT,
+    residentid INT,
+    status CHAR(1) CHECK (status IN ('A','L','C')) NOT NULL,
+
+    CONSTRAINT fk_residentid_payment
+        FOREIGN KEY (orno)
+        REFERENCES payment(orno),
+
+    CONSTRAINT fk_residentid_resident
+        FOREIGN KEY (residentid)
+        REFERENCES resident(residentid)
 );
 
 
@@ -131,69 +147,13 @@ CREATE TABLE hoa (
 
 );
 
-CREATE TABLE hoa_officer(
-    homeownerid INT,
-    hoaname VARCHAR(100),
-
-    position ENUM('X'), 
-
-    start_date DATE NOT NULL,
-    end_date DATE NOT NULL,
-
-    elec_date DATE,
-
-    elec_venue VARCHAR(45) NOT NULL,
-    elec_quorum BOOLEAN NOT NULL,
-    elec_witnessname VARCHAR(100) NOT NULL,
-    elec_witnessmobile INT(10) NOT NULL,
-
-    avail_Mon CHAR(2) CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,
-    avail_Tue CHAR(2) CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,
-    avail_Wed CHAR(2) CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,
-    avail_Thu CHAR(2) CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,
-    avail_Fri CHAR(2) CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,
-    avail_Sat CHAR(2) CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,
-    avail_Sun CHAR(2) CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,
-
-    PRIMARY KEY (homeownerid, position, elec_date),
-
-    CONSTRAINT fk_officer_homeowner
-        FOREIGN KEY (homeownerid)
-        REFERENCES homeowner(homeownerid),
-
-    CONSTRAINT fk_officer_hoa
-        FOREIGN KEY (hoaname)
-        REFERENCES hoa(hoaname)
-);
-
-CREATE TABLE resident_id(
-    cardno INT PRIMARY KEY,
-    request_date DATE NOT NULL,
-    request_reason VARCHAR(45) NOT NULL,
-    issue_date DATE NOT NULL,
-    homeownerid INT NOT NULL,
-    orno INT,
-    residentid INT,
-    status CHAR(1) CHECK (status IN ('A','L','C')) NOT NULL,
-
-    CONSTRAINT fk_residentid_payment
-        FOREIGN KEY (orno)
-        REFERENCES payment(orno),
-
-    CONSTRAINT fk_residentid_resident
-        FOREIGN KEY (residentid)
-        REFERENCES resident(residentid),
-    
-    CONSTRAINT fk_residentid_officer
-        FOREIGN KEY (homeownerid)
-        REFERENCES hoa_officer(homeownerid)
-);
 
 CREATE TABLE hoa_docs(
     submission_type INT PRIMARY KEY,
     doc_name VARCHAR(200) NOT NULL,
     submission_date DATETIME
 );
+
 
 CREATE TABLE hoa_submissions(
     hoa_hoaname VARCHAR(100),
@@ -210,4 +170,37 @@ CREATE TABLE hoa_submissions(
     CONSTRAINT fk_submission_doc
         FOREIGN KEY (hoa_docs_submission_type)
         REFERENCES hoa_docs(submission_type)
+);
+
+
+CREATE TABLE hoa_officer(
+    homeownerid INT,
+    position ENUM(100), --specs just say enum(...)
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+
+    elec_date DATE
+
+    elec_venue VARCHAR(45) NOT NULL,
+    elec_quorum BOOLEAN NOT NULL,
+    elec_witnessname VARCHAR(100) NOT NULL,
+    elec_witnessmobile INT(10) NOT NULL,
+
+    avail_Mon CHECK (avail_Mon IN ('M','A','NA')) NOT NULL,,
+    avail_Tue CHECK (avail_Tue IN ('M','A','NA')) NOT NULL,,
+    avail_Wed CHECK (avail_Wed IN ('M','A','NA')) NOT NULL,,
+    avail_Thu CHECK (avail_Thu IN ('M','A','NA')) NOT NULL,,
+    avail_Fri CHECK (avail_Fri IN ('M','A','NA')) NOT NULL,,
+    avail_Sat CHECK (avail_Sat IN ('M','A','NA')) NOT NULL,,
+    avail_Sun CHECK (avail_Sun IN ('M','A','NA')) NOT NULL,,
+
+    PRIMARY KEY (homeownerid, position, elec_date),
+
+    CONSTRAINT fk_officer_homeowner
+        FOREIGN KEY (homeownerid)
+        REFERENCES homeowner(homeownerid),
+
+    CONSTRAINT fk_officer_hoa
+        FOREIGN KEY (hoaname)
+        REFERENCES hoa(hoaname)
 );

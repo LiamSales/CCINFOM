@@ -1,39 +1,25 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
-import jakarta.persistence.*;
-
-@Entity
-@Table(name = "household")
 public class Household {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "householdid")
-    private Integer householdid;
+    private Integer householdId;
+    private String propertyCode;
 
-    @OneToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(
-        name = "property_code",
-        nullable = false,
-        unique = true
-    )
-    private Property property;
+    public Household() {}
 
-    protected Household() {}
-
-    public Household(Property property) {
-        this.property = property;
+    public Integer getHouseholdId() {
+        return householdId;
     }
 
-    public Integer getHouseholdid() {
-        return householdid;
+    public void setHouseholdId(Integer householdId) {
+        this.householdId = householdId;
     }
 
-    public Property getProperty() {
-        return property;
+    public String getPropertyCode() {
+        return propertyCode;
     }
 
-    public void setProperty(Property property) {
-        this.property = property;
+    public void setPropertyCode(String propertyCode) {
+        this.propertyCode = propertyCode;
     }
 }

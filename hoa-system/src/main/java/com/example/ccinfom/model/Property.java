@@ -1,64 +1,46 @@
-package com.example.ccinfom;
+package com.example.ccinfom.model;
 
 import java.time.LocalDate;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Positive;
 
-@Entity
-@Table(name = "property")
 public class Property {
 
-    @Id
-    @Column(name = "property_code", length = 6)
     private String propertyCode;
+    private int homeownerId;
 
-    @ManyToOne(optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "homeownerid", nullable = false)
-    private Homeowner homeowner_homeownerid;
-    
-    @Positive
-    @Column(name = "size", nullable = false)
     private int size;
+    private LocalDate turnoverDate;
 
-    @Column(name = "turnover_date")
-    private LocalDate turnover_date;
-
-    protected Property() {}
-
-    public Property(
-            String propertyCode,
-            Homeowner homeowner,
-            int size,
-            LocalDate turnover_date
-    ) {
-        this.propertyCode = propertyCode;
-        this.homeowner = homeowner;
-        this.size = size;
-        this.turnover_date = turnover_date;
-    }
+    public Property() {}
 
     public String getPropertyCode() {
         return propertyCode;
     }
 
-    public Homeowner getHomeowner() {
-        return homeowner;
+    public void setPropertyCode(String propertyCode) {
+        this.propertyCode = propertyCode;
+    }
+
+    public int getHomeownerId() {
+        return homeownerId;
+    }
+
+    public void setHomeownerId(int homeownerId) {
+        this.homeownerId = homeownerId;
     }
 
     public int getSize() {
         return size;
     }
 
-    public LocalDate getTurnover_date() {
-        return turnover_date;
+    public void setSize(int size) {
+        this.size = size;
     }
 
-    public void setHomeowner(Homeowner homeowner) {
-        this.homeowner = homeowner;
+    public LocalDate getTurnoverDate() {
+        return turnoverDate;
     }
 
-    public void setTurnover_date(LocalDate turnover_date) {
-        this.turnover_date = turnover_date;
+    public void setTurnoverDate(LocalDate turnoverDate) {
+        this.turnoverDate = turnoverDate;
     }
 }
