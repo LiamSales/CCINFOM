@@ -1,32 +1,49 @@
-package com.example.ccinfom;
+package com.example.ccinfom.service;
+
+import com.example.ccinfom.dao.HomeownerDao;
+import com.example.ccinfom.dao.IndividualDao;
+import com.example.ccinfom.model.Homeowner;
+import com.example.ccinfom.model.Individual;
 
 import org.springframework.stereotype.Service;
 
-//we also need to edit this because its basically an inheritance, so we inherit from individual again? i think?
-
+import java.util.List;
 
 @Service
 public class HomeownerService {
 
-    private final HomeownerRepository homeownerRepository;
+    private final HomeownerDao homeownerDao;
+    private final IndividualDao individualDao;
 
-    public HomeownerService(HomeownerRepository homeownerRepository) {
-        this.homeownerRepository = homeownerRepository;
+    public HomeownerService(HomeownerDao homeownerDao,
+                            IndividualDao individualDao) {
+        this.homeownerDao = homeownerDao;
+        this.individualDao = individualDao;
     }
 
-    public Homeowner save(Homeowner homeowner) {
-        return homeownerRepository.save(homeowner);
+    public List<Homeowner> getAllHomeowners() {
+        return homeownerDao.findAll();
     }
 
-    public Homeowner findById(Long id) {
-    return homeownerRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Homeowner not found: " + id));
-}
-
-    public Homeowner getSampleHomeowner() {
-        return homeownerRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Homeowner not found"));
+    public Homeowner getHomeownerById(int homeownerid) {
+        return homeownerDao.findById(homeownerid);
     }
 
-    // should also have sql commands for other tables
+    public int createHomeowner(Homeowner homeowner) {
+
+        // Business rule:
+        // homeowner must already exist as an Individual
+
+        Individual individual = individualDao.findById(homeowner.getHomeownerid());
+
+        if (individual == null) {
+            throw new IllegalStateException("Individual must exist before becoming a homeowner");
+        }
+
+        return homeownerDao.insert(homeowner);
+    }
+
+    public int deleteHomeowner(int homeownerid) {
+        return homeownerDao.delete(homeownerid);
+    }
 }
