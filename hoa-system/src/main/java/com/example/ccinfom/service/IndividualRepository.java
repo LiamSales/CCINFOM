@@ -1,32 +1,41 @@
-package com.example.ccinfom;
+package com.example.ccinfom.service;
+
+import com.example.ccinfom.dao.IndividualDao;
+import com.example.ccinfom.model.Individual;
 
 import org.springframework.stereotype.Service;
 
-//we also need to edit this because its basically an inheritance, so we inherit from individual again? i think?
-
+import java.util.List;
 
 @Service
-public class HomeownerService {
+public class IndividualService {
 
-    private final HomeownerRepository homeownerRepository;
+    private final IndividualDao individualDao;
 
-    public HomeownerService(HomeownerRepository homeownerRepository) {
-        this.homeownerRepository = homeownerRepository;
+    public IndividualService(IndividualDao individualDao) {
+        this.individualDao = individualDao;
     }
 
-    public Homeowner save(Homeowner homeowner) {
-        return homeownerRepository.save(homeowner);
+    public List<Individual> getAllIndividuals() {
+        return individualDao.findAll();
     }
 
-    public Homeowner findById(Long id) {
-    return homeownerRepository.findById(id)
-            .orElseThrow(() -> new RuntimeException("Homeowner not found: " + id));
-}
-
-    public Homeowner getSampleHomeowner() {
-        return homeownerRepository.findById(1L)
-                .orElseThrow(() -> new RuntimeException("Homeowner not found"));
+    public Individual getIndividualById(int individualid) {
+        return individualDao.findById(individualid);
     }
 
-    // should also have sql commands for other tables
+    public int createIndividual(Individual individual) {
+
+        // Example business rule:
+        // email must not be empty
+        if (individual.getEmail() == null || individual.getEmail().isBlank()) {
+            throw new IllegalArgumentException("Email is required");
+        }
+
+        return individualDao.insert(individual);
+    }
+
+    public int deleteIndividual(int individualid) {
+        return individualDao.delete(individualid);
+    }
 }
