@@ -1,29 +1,25 @@
-package com.example.ccinfom;
-
-import org.springframework.web.bind.annotation.*;
-
 @RestController
-    //handles HTTP requests and returns JSON
-@RequestMapping("/homeowners")
-    //sets the base URL path.
-public class TestController {
+@RequestMapping("/individuals")
+public class IndividualController {
 
-    private final HoaService hoaService;
+    private final IndividualService individualService;
 
-    public TestController(HoaService hoaService) {
-        this.hoaService = hoaService;
+    public IndividualController(IndividualService individualService) {
+        this.individualService = individualService;
     }
 
-    @PostMapping
-    //Tomcat receives the HTTP POST
-    //passed as an obj in java memory, returned as JSON
-    public Homeowner create(@RequestBody Homeowner homeowner) {
-        return hoaService.save(homeowner);
+    @GetMapping
+    public List<Individual> getAllIndividuals() {
+        return individualService.getAllIndividuals();
     }
 
     @GetMapping("/{id}")
-    public Homeowner get(@PathVariable Long id) {
-        return hoaService.findById(id);
+    public Individual getIndividual(@PathVariable int id) {
+        return individualService.getIndividualById(id);
     }
 
+    @PostMapping
+    public int createIndividual(@RequestBody Individual individual) {
+        return individualService.createIndividual(individual);
+    }
 }
