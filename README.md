@@ -1,6 +1,17 @@
 # CCINFOM
 Information Management
 
+todo:
+1. Create asset table
+2. Create asset_activity table
+3. Implement:
+   - Model
+   - DAO
+   - Service (with rules)
+   - Controller
+4. Add logical deletion (status fields)
+5. Add sample data
+
 # Homeowners Association (HOA) Database Application
 
 ## Overview
