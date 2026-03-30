@@ -205,3 +205,52 @@ CREATE TABLE hoa_officer(
         FOREIGN KEY (hoaname)
         REFERENCES hoa(hoaname)
 );
+
+
+CREATE TABLE asset (
+    assetid INT AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(45) NOT NULL,
+    description VARCHAR(100),
+
+    acq_date DATE NOT NULL,
+    forrent BOOLEAN NOT NULL,
+
+    value FLOAT NOT NULL,
+    type ENUM('P','E','F','O') NOT NULL,
+    --enum for fixed values, check for editable?
+
+    status ENUM('W','DE','FR','FD','DI') NOT NULL,
+
+    location VARCHAR(45) NOT NULL,
+    location_mapx VARCHAR(45) NOT NULL,
+    location_mapy VARCHAR(45) NOT NULL
+
+    --An asset belongs to an HOA-
+    -- Property assets do not
+    -- always contain other assets
+    -- Other assets are not always
+    -- located in property assets
+);
+
+CREATE TABLE asset_activity (
+
+
+)
+
+CREATE TABLE delete_activity (
+
+
+)
+
+CREATE TABLE asset_transfer (
+
+
+)
+
+CREATE TABLE asset_rental (
+
+
+)
+
+-- just make these, then use ai to get the rest in java, then apply business rules manually.
