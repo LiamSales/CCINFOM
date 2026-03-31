@@ -11,6 +11,11 @@ DROP TABLE IF EXISTS resident;
 DROP TABLE IF EXISTS homeowner;
 DROP TABLE IF EXISTS mobile;
 DROP TABLE IF EXISTS individual;
+DROP TABLE IF EXISTS asset;
+DROP TABLE IF EXISTS asset_activity;
+DROP TABLE IF EXISTS asset_rental;
+DROP TABLE IF EXISTS asset_transfer;
+DROP TABLE IF EXISTS donation;
 
 
 CREATE TABLE individual (
@@ -267,11 +272,6 @@ CREATE TABLE asset_activity (
         FOREIGN KEY (orno)
         REFERENCES payment(orno)
 );
-
-CREATE TABLE delete_activity (
-
-
-)
 
 CREATE TABLE asset_transfer (
     transferid INT AUTO_INCREMENT PRIMARY KEY,

@@ -11,6 +11,11 @@ DROP TABLE IF EXISTS resident;
 DROP TABLE IF EXISTS homeowner;
 DROP TABLE IF EXISTS mobile;
 DROP TABLE IF EXISTS individual;
+DROP TABLE IF EXISTS asset;
+DROP TABLE IF EXISTS asset_activity;
+DROP TABLE IF EXISTS asset_rental;
+DROP TABLE IF EXISTS asset_transfer;
+DROP TABLE IF EXISTS donation;
 
 
 CREATE TABLE individual (
@@ -205,3 +210,156 @@ CREATE TABLE hoa_officer(
         FOREIGN KEY (hoaname)
         REFERENCES hoa(hoaname)
 );
+
+
+CREATE TABLE asset (
+    assetid INT AUTO_INCREMENT PRIMARY KEY,
+
+    name VARCHAR(45) NOT NULL,
+    description VARCHAR(100),
+
+    acq_date DATE NOT NULL,
+    forrent BOOLEAN NOT NULL,
+
+    value FLOAT NOT NULL,
+    type ENUM('P','E','F','O') NOT NULL,
+    --enum for fixed values, check for editable?
+
+    status ENUM('W','DE','FR','FD','DI') NOT NULL,
+
+    location VARCHAR(45) NOT NULL,
+    location_mapx VARCHAR(45) NOT NULL,
+    location_mapy VARCHAR(45) NOT NULL
+
+    --An asset belongs to an HOA-
+    -- Property assets do not
+    -- always contain other assets
+    -- Other assets are not always
+    -- located in property assets
+);
+
+CREATE TABLE asset_activity (
+    activityid INT AUTO_INCREMENT PRIMARY KEY,
+
+    assetid INT NOT NULL,
+    homeownerid INT NOT NULL,
+    orno INT,
+
+    activity_date DATE NOT NULL,
+    description VARCHAR(100) NOT NULL,
+
+    sched_start DATE,
+    sched_end DATE,
+
+    actual_start DATE,
+    actual_end DATE,
+
+    status ENUM('S','O','C','D') NOT NULL,
+    -- S = Scheduled
+    -- O = Ongoing
+    -- C = Completed
+    -- D = Deleted (logical delete)
+
+    CONSTRAINT fk_activity_asset
+        FOREIGN KEY (assetid)
+        REFERENCES asset(assetid),
+
+    CONSTRAINT fk_activity_officer
+        FOREIGN KEY (homeownerid)
+        REFERENCES hoa_officer(homeownerid),
+
+    CONSTRAINT fk_activity_payment
+        FOREIGN KEY (orno)
+        REFERENCES payment(orno)
+);
+
+CREATE TABLE asset_transfer (
+    transferid INT AUTO_INCREMENT PRIMARY KEY,
+
+    assetid INT NOT NULL,
+    homeownerid INT NOT NULL,
+    orno INT,
+
+    sched_date DATE NOT NULL,
+    actual_date DATE,
+
+    from_location VARCHAR(45) NOT NULL,
+    to_location VARCHAR(45) NOT NULL,
+
+    person_name VARCHAR(100) NOT NULL,
+    person_mobile VARCHAR(20) NOT NULL,
+
+    status ENUM('S','O','C','D') NOT NULL,
+    -- Scheduled, Ongoing, Completed, Deleted
+
+    CONSTRAINT fk_transfer_asset
+        FOREIGN KEY (assetid)
+        REFERENCES asset(assetid),
+
+    CONSTRAINT fk_transfer_officer
+        FOREIGN KEY (homeownerid)
+        REFERENCES hoa_officer(homeownerid),
+
+    CONSTRAINT fk_transfer_payment
+        FOREIGN KEY (orno)
+        REFERENCES payment(orno)
+);
+
+CREATE TABLE asset_rental (
+    rentalid INT AUTO_INCREMENT PRIMARY KEY,
+
+    assetid INT NOT NULL,
+    residentid INT NOT NULL,
+    homeownerid INT NOT NULL,
+    orno INT,
+
+    reservation_date DATE NOT NULL,
+    rental_date DATE,
+
+    discount FLOAT,
+
+    status ENUM('RV','C','OR','RT','D') NOT NULL,
+
+    inspection_details VARCHAR(100),
+    return_officer INT,
+    damage_fee FLOAT,
+
+    CONSTRAINT fk_rental_asset
+        FOREIGN KEY (assetid)
+        REFERENCES asset(assetid),
+
+    CONSTRAINT fk_rental_resident
+        FOREIGN KEY (residentid)
+        REFERENCES resident(residentid),
+
+    CONSTRAINT fk_rental_officer
+        FOREIGN KEY (homeownerid)
+        REFERENCES hoa_officer(homeownerid),
+
+    CONSTRAINT fk_rental_return_officer
+        FOREIGN KEY (return_officer)
+        REFERENCES hoa_officer(homeownerid),
+
+    CONSTRAINT fk_rental_payment
+        FOREIGN KEY (orno)
+        REFERENCES payment(orno)
+);
+
+CREATE TABLE donation (
+    donationid INT AUTO_INCREMENT PRIMARY KEY,
+
+    donor_name VARCHAR(100) NOT NULL,
+    donor_address VARCHAR(200) NOT NULL,
+
+    homeownerid INT NOT NULL,
+
+    donation_date DATE NOT NULL,
+
+    description VARCHAR(200),
+
+    CONSTRAINT fk_donation_officer
+        FOREIGN KEY (homeownerid)
+        REFERENCES hoa_officer(homeownerid)
+);
+
+-- just make these, then use ai to get the rest in java, then apply business rules manually.
