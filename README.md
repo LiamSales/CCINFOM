@@ -1,6 +1,9 @@
 # CCINFOM
 Information Management
 
+# use EF migrations
+
+
 todo:
 1. Create asset table
 2. Create asset_activity table
