@@ -31,7 +31,27 @@ how its built and run basically -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+       
+</dependency>
+
+    <dependencies>
+
+        <!-- Web layer (controllers, REST endpoints, Tomcat server) -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+
+        <!-- Database Migrations: Run automatically on app startup -->
+        <dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+        </dependency>
+
+    
+
+
+
 
         <!-- Spring JDBC -->
         <dependency>
