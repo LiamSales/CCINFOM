@@ -1,7 +1,7 @@
 # CCINFOM
 Information Management
 
-# use EF migrations
+# use flyway/liquidbase migrations, study which to use first
 
 
 todo:
