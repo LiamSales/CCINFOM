@@ -1,7 +1,7 @@
 # CCINFOM
 Information Management
 
-# use flyway/liquidbase migrations, study which to use first
+# use flyway migrations
 
 
 todo:
