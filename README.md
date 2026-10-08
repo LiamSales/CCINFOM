@@ -1,21 +1,40 @@
-# CCINFOM
-Information Management
-
-# use flyway migrations
-
-
-todo:
-1. Create asset table
-2. Create asset_activity table
-3. Implement:
-   - Model
-   - DAO
-   - Service (with rules)
-   - Controller
-4. Add logical deletion (status fields)
-5. Add sample data
-
 # Homeowners Association (HOA) Database Application
+
+## Run with PostgreSQL
+
+The application and schema migrations are in `hoa-system`. Use Java 17 or newer,
+Maven, and PostgreSQL 10 or newer. The application connects to a local PostgreSQL
+database by default; connection settings can be overridden with environment variables.
+
+1. Create an empty database and login in PostgreSQL (for example, from `psql` as an
+   administrator):
+
+   ```sql
+   CREATE ROLE hoa_user LOGIN;
+   \password hoa_user
+   CREATE DATABASE hoa_db OWNER hoa_user;
+   ```
+
+2. Open a terminal in `hoa-system`, set the database credentials, and start the app.
+   In PowerShell:
+
+   ```powershell
+   $env:DB_USERNAME = "hoa_user"
+   $env:DB_PASSWORD = "your-local-password"
+   mvn spring-boot:run
+   ```
+
+   On macOS/Linux, use `export DB_USERNAME=hoa_user` and
+   `export DB_PASSWORD=your-local-password` before running `mvn spring-boot:run`.
+
+   The defaults are `jdbc:postgresql://localhost:5432/hoa_db` and username `hoa_user`.
+   Set `DB_URL` to connect to a PostgreSQL server on another host, for example
+   `jdbc:postgresql://db-host:5432/hoa_db`.
+
+Flyway runs `hoa-system/src/main/resources/db/migration` automatically at application
+startup and records applied versions in `flyway_schema_history`. The initial migration
+creates an empty schema; it does not add sample records. Do not rerun schema SQL by hand
+or edit a migration after it has been applied—add a new versioned migration instead.
 
 ## Overview
 
@@ -250,8 +269,3 @@ During the **DB Design Defense**, students must justify their schema by simulati
 * Physical deletion of critical records is generally prohibited.
 * Most deletions are logical, implemented via status fields.
 * Strong emphasis is placed on real-world modeling and database correctness.
-
-        mysql> CREATE USER 'hoa_user'@'localhost'
-            -> 5';
-        IDENTIFIED BY 'Str0ng!Hoa#2025';
-        Query OK, 0 rows affected (0.01 sec)

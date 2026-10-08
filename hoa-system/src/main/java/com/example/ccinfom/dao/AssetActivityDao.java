@@ -25,15 +25,21 @@ public class AssetActivityDao {
     public int insert(AssetActivity activity) {
         String sql = """
             INSERT INTO asset_activity
-            (assetid, activity_date, description, officer, status)
-            VALUES (?, ?, ?, ?, ?)
+            (assetid, homeownerid, orno, activity_date, description,
+             sched_start, sched_end, actual_start, actual_end, status)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """;
 
         return jdbcTemplate.update(sql,
                 activity.getAssetid(),
+                activity.getHomeownerid(),
+                activity.getOrno(),
                 activity.getActivity_date(),
                 activity.getDescription(),
-                activity.getOfficer(),
+                activity.getSched_start(),
+                activity.getSched_end(),
+                activity.getActual_start(),
+                activity.getActual_end(),
                 activity.getStatus()
         );
     }
