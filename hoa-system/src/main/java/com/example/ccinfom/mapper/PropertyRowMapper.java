@@ -13,10 +13,10 @@ public class PropertyRowMapper implements RowMapper<Property> {
 
         Property property = new Property();
 
-        property.setPropertycode(rs.getString("propertycode"));
-        property.setHomeownerid(rs.getInt("homeownerid"));
+        property.setPropertyCode(rs.getString("propertycode"));
+        property.setHomeownerId(rs.getInt("homeownerid"));
         property.setSize(rs.getInt("size"));
-        property.setTurnover_date(rs.getDate("turnover_date").toLocalDate());
+        property.setTurnoverDate(rs.getDate("turnover_date").toLocalDate());
 
         return property;
     }

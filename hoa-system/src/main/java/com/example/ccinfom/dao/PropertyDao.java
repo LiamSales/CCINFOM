@@ -21,11 +21,11 @@ public class PropertyDao {
     }
 
     public Property findById(String propertycode) {
-        return jdbcTemplate.queryForObject(
+        return jdbcTemplate.query(
                 "SELECT * FROM property WHERE propertycode = ?",
                 new PropertyRowMapper(),
                 propertycode
-        );
+        ).stream().findFirst().orElse(null);
     }
 
     public int insert(Property property) {
@@ -37,10 +37,10 @@ public class PropertyDao {
                 """;
 
         return jdbcTemplate.update(sql,
-                property.getPropertycode(),
-                property.getHomeownerid(),
+                property.getPropertyCode(),
+                property.getHomeownerId(),
                 property.getSize(),
-                property.getTurnover_date()
+                property.getTurnoverDate()
         );
     }
 

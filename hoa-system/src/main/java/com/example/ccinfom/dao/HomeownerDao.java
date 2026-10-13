@@ -19,20 +19,28 @@ public class HomeownerDao {
 
     public List<Homeowner> findAll() {
 
-        String sql = "SELECT * FROM homeowner";
+        String sql = """
+                SELECT i.*, h.residency_start, h.membership, h.isresident
+                FROM homeowner h
+                JOIN individual i ON i.individualid = h.homeownerid
+                """;
 
         return jdbcTemplate.query(sql, new HomeownerRowMapper());
     }
 
     public Homeowner findById(int homeownerid) {
 
-        String sql = "SELECT * FROM homeowner WHERE homeownerid = ?";
+        String sql = """
+                SELECT i.*, h.residency_start, h.membership, h.isresident
+                FROM homeowner h
+                JOIN individual i ON i.individualid = h.homeownerid
+                WHERE h.homeownerid = ?
+                """;
 
-        return jdbcTemplate.queryForObject(
-                sql,
-                new HomeownerRowMapper(),
-                homeownerid
-        );
+        return jdbcTemplate.query(sql, new HomeownerRowMapper(), homeownerid)
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     public int insert(Homeowner homeowner) {
@@ -44,10 +52,10 @@ public class HomeownerDao {
                 """;
 
         return jdbcTemplate.update(sql,
-                homeowner.getHomeownerid(),
-                homeowner.getResidency_start(),
+                homeowner.getIndividualid(),
+                homeowner.getResidencyStart(),
                 homeowner.isMembership(),
-                homeowner.isIsresident()
+                homeowner.isResident()
         );
     }
 

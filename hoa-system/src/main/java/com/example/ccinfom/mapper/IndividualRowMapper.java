@@ -20,7 +20,7 @@ public class IndividualRowMapper implements RowMapper<Individual> {
         individual.setMi(rs.getString("mi"));
         individual.setEmail(rs.getString("email"));
         individual.setBirthday(rs.getDate("birthday").toLocalDate());
-        individual.setGender(rs.getString("gender"));
+        individual.setGender(Individual.Gender.fromCode(rs.getString("gender").charAt(0)));
         individual.setFacebook_url(rs.getString("facebook_url"));
         individual.setPic_filename(rs.getString("pic_filename"));
         individual.setUndertaking(rs.getBoolean("undertaking"));

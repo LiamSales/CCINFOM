@@ -34,7 +34,7 @@ public class PropertyService {
         // BUSINESS RULE:
         // Property must belong to an existing homeowner
 
-        Homeowner homeowner = homeownerDao.findById(property.getHomeownerid());
+        Homeowner homeowner = homeownerDao.findById(property.getHomeownerId());
 
         if (homeowner == null) {
             throw new IllegalStateException("Homeowner must exist before property assignment");

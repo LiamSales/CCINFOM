@@ -34,7 +34,7 @@ public class HomeownerService {
         // Business rule:
         // homeowner must already exist as an Individual
 
-        Individual individual = individualDao.findById(homeowner.getHomeownerid());
+        Individual individual = individualDao.findById(homeowner.getIndividualid());
 
         if (individual == null) {
             throw new IllegalStateException("Individual must exist before becoming a homeowner");

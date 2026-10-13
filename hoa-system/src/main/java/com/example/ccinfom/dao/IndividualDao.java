@@ -28,11 +28,10 @@ public class IndividualDao {
 
         String sql = "SELECT * FROM individual WHERE individualid = ?";
 
-        return jdbcTemplate.queryForObject(
-                sql,
-                new IndividualRowMapper(),
-                individualid
-        );
+        return jdbcTemplate.query(sql, new IndividualRowMapper(), individualid)
+                .stream()
+                .findFirst()
+                .orElse(null);
     }
 
     public int insert(Individual individual) {
@@ -50,7 +49,7 @@ public class IndividualDao {
                 individual.getMi(),
                 individual.getEmail(),
                 individual.getBirthday(),
-                individual.getGender(),
+                String.valueOf(individual.getGender().getCode()),
                 individual.getFacebook_url(),
                 individual.getPic_filename(),
                 individual.isUndertaking()
