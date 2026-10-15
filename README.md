@@ -1,6 +1,6 @@
 # Homeowners Association (HOA) Database Application
 
-## Run with PostgreSQL, installed maven and java17
+# was able to run, use ai to complete 
 
 The application and schema migrations are in `hoa-system`. Use Java 17 or newer,
 Maven, and PostgreSQL 10 or newer. The application connects to a local PostgreSQL
